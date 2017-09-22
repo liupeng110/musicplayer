@@ -20,8 +20,13 @@ android {
     }
 }
 
+apply plugin: 'replugin-host-gradle'
+repluginHostConfig {
+    useAppCompat = true
 
-//repluginHostConfig { useAppCompat = true }
+    // 可以在这里自定义常驻进程的名字
+    // persistentName = ":XXXXService"
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -39,4 +44,3 @@ dependencies {
     compile 'com.qihoo360.replugin:replugin-host-lib:2.2.0'
 
 }
-apply plugin: 'replugin-host-gradle'
