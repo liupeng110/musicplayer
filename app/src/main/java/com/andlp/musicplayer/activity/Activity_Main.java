@@ -64,13 +64,12 @@ public class Activity_Main extends Activity_Base {
     private void btn2(View view) {
         L.i(tag,"单击  btn2---通过包名");
         RePlugin.install("/mnt/sdcard/www/app-debug.apk");
-        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.yltx.appplugin", "com.yltx.appplugin.TestActivity"));
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.andlp.them", "com.andlp.them.MainActivity"));
     }
 
     @Event(value = R.id.btn3,type = View.OnClickListener.class)
     private void btn3(View view) {
         L.i(tag,"单击  btn3");
-//        RePlugin.install("/mnt/sdcard/www/app-debug.apk");
         RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin1","com.yltx.appplugin.TestActivity"));
 
 //        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin1",
