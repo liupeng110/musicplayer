@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.util.L;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qihoo360.replugin.RePlugin;
 import com.qihoo360.replugin.model.PluginInfo;
 import com.qihoo360.replugin.utils.FileUtils;
@@ -29,7 +30,28 @@ public class Activity_Main extends Activity_Base {
     @ViewInject(R.id.btn2) private Button btn2;
     @ViewInject(R.id.btn3) private Button btn3;
     @ViewInject(R.id.btn4) private Button btn4;
-    @Override protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    @Override protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);initView(); }
+
+
+    private void initView(){
+        initData();
+    }
+
+    private void initData(){
+        initSlidingMenu();
+    }
+
+    private void initSlidingMenu(){
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        menu.setShadowWidthRes(R.dimen.shadow_width);
+//        menu.setShadowDrawable(R.drawable.shadow);
+//        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+//        menu.setMenu(R.layout.menu_sliding);
+    }
 
     @Event(value = R.id.txt,type = View.OnClickListener.class)
     private void txt(View view) {
@@ -40,47 +62,25 @@ public class Activity_Main extends Activity_Base {
     @Event(value = R.id.btn1,type = View.OnClickListener.class)
     private void btn1(View view) {
         L.i(tag,"单击  btn1---");
-        String pluginName= "plugin.apk";
-        String pluginPath = "external" + File.separator + pluginName;
-        // 文件是否已经存在？直接删除重来
-        String pluginFilePath = getFilesDir().getAbsolutePath() + File.separator + pluginName;
-        File pluginFile = new File(pluginFilePath);
-        if (pluginFile.exists()) {
-            FileUtils.deleteQuietly(pluginFile);
-        }
-        copyAssetsFileToAppFiles(pluginPath, pluginName);
-        PluginInfo info = null;
-        if (pluginFile.exists()) {
-            info = RePlugin.install(pluginFilePath);
-        }
-        if (info != null) {
-            RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent(info.getName(), "com.andlp.musicplayer.activity.Activity_Main"));
-        } else {
-            Toast.makeText(Activity_Main.this, "install external plugin failed", Toast.LENGTH_SHORT).show();
-        }
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin", "com.andlp.them.MainActivity"));
+
     }
 
     @Event(value = R.id.btn2,type = View.OnClickListener.class)
     private void btn2(View view) {
         L.i(tag,"单击  btn2---通过包名");
-        RePlugin.install("/mnt/sdcard/www/app-debug.apk");
-        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.andlp.them", "com.andlp.them.MainActivity"));
-    }
+
+      }
 
     @Event(value = R.id.btn3,type = View.OnClickListener.class)
     private void btn3(View view) {
         L.i(tag,"单击  btn3");
-        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin1","com.yltx.appplugin.TestActivity"));
-
-//        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin1",
-//                "com.yltx.appplugin.TestActivity"));
-    }
+         }
 
     @Event(value = R.id.btn4,type = View.OnClickListener.class)
     private void btn4(View view) {
         L.i(tag,"单击  btn4");
-        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.yltx.appplugin", "com.yltx.appplugin.TestActivity"));
-    }
+         }
 
 
     /**
@@ -112,6 +112,21 @@ public class Activity_Main extends Activity_Base {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void plugin(){
+        //1.外部安装并打开  info!=null,suc
+        RePlugin.install("/mnt/sdcard/www/app-debug.apk");
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.andlp.them", "com.andlp.them.MainActivity"));
+
+        //2.assets/plugin/plugin.jar
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin","com.yltx.appplugin.TestActivity"));
+
+        //3.install之后根据包名和activity打开
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("com.yltx.appplugin", "com.yltx.appplugin.TestActivity"));
+
+
+
     }
 
 }
