@@ -1,32 +1,29 @@
 package com.andlp.musicplayer.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.xutils.x;
+import com.andlp.musicplayer.R;
+
+import org.xutils.view.annotation.ContentView;
 
 /**
- * 717219917@qq.com  2017/9/22 15:26
+ * 717219917@qq.com  2017/9/25 15:10
  */
-
-public class Fragment_Base extends Fragment {
-
-    private boolean injected = false;
+@ContentView(R.layout.fragment_local)
+public class Fragment_Local extends Fragment_Base {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        injected = true;
-        return x.view().inject(this, inflater, container);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!injected) {
-            x.view().inject(this, this.getView());
-        }
+
     }
 }

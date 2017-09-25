@@ -1,18 +1,18 @@
 package com.andlp.musicplayer.activity;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.fragment.Fragment_Local;
 import com.andlp.musicplayer.util.L;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qihoo360.replugin.RePlugin;
-import com.qihoo360.replugin.model.PluginInfo;
-import com.qihoo360.replugin.utils.FileUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -80,6 +80,7 @@ public class Activity_Main extends Activity_Base {
     @Event(value = R.id.btn4,type = View.OnClickListener.class)
     private void btn4(View view) {
         L.i(tag,"单击  btn4");
+        addFragment();
          }
 
 
@@ -128,5 +129,29 @@ public class Activity_Main extends Activity_Base {
 
 
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //    super.onSaveInstanceState(outState);
+    }
+
+
+    private void addFragment(){
+        Fragment_Local fragment_local = new Fragment_Local();
+        FragmentTransaction tx =  getFragmentManager().beginTransaction();
+        tx.add(R.id.content,fragment_local);//将当前的事务添加到了回退栈
+        tx.addToBackStack(null);
+        tx.commit();
+//        tx.commitAllowingStateLoss();
+
+    }
+
+    @Override public void onBackPressed() {
+        L.i("back "+getFragmentManager().getBackStackEntryCount());
+        getFragmentManager().popBackStack();
+//        super.onBackPressed();
+    }
+
 
 }
