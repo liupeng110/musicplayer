@@ -1,7 +1,8 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Light">
+    <!--<style name="AppTheme" parent="@android:style/Theme.Light">-->
+    <!--<style name="AppTheme" parent="@android:style/Theme.Holo.Light">-->
+    <style name="AppTheme" parent="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

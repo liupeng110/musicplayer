@@ -142,8 +142,8 @@ public class Activity_Main extends Activity_Base {
         FragmentTransaction tx =  getFragmentManager().beginTransaction();
         tx.add(R.id.content,fragment_local);//将当前的事务添加到了回退栈
         tx.addToBackStack(null);
-        tx.commit();
-//        tx.commitAllowingStateLoss();
+        tx.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);//自定义动画效果
+        tx.commit();//tx.commitAllowingStateLoss();
 
     }
 
