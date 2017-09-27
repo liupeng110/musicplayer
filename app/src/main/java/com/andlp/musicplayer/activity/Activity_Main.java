@@ -1,16 +1,23 @@
 package com.andlp.musicplayer.activity;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.fragment.Fragment_Local;
 import com.andlp.musicplayer.util.L;
+import com.gyf.barlibrary.ImmersionBar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qihoo360.replugin.RePlugin;
 
@@ -18,7 +25,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -30,10 +36,15 @@ public class Activity_Main extends Activity_Base {
     @ViewInject(R.id.btn2) private Button btn2;
     @ViewInject(R.id.btn3) private Button btn3;
     @ViewInject(R.id.btn4) private Button btn4;
-    @Override protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);initView(); }
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);initView();
+
+    }
 
 
     private void initView(){
+
         initData();
     }
 
@@ -69,7 +80,7 @@ public class Activity_Main extends Activity_Base {
     @Event(value = R.id.btn2,type = View.OnClickListener.class)
     private void btn2(View view) {
         L.i(tag,"单击  btn2---通过包名");
-
+        startActivity(new Intent(Activity_Main.this,Activity_Group.class));
       }
 
     @Event(value = R.id.btn3,type = View.OnClickListener.class)
@@ -144,8 +155,51 @@ public class Activity_Main extends Activity_Base {
         tx.addToBackStack(null);
         tx.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);//自定义动画效果
         tx.commit();//tx.commitAllowingStateLoss();
-
     }
+
+    private void addFrameLayout(){
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams
+                (FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        //设置顶部,左边布局
+        params.gravity= Gravity.TOP|Gravity.LEFT;
+        TextView top=new TextView(this);
+        //控件字体位置位于左边
+        top.setGravity(Gravity.LEFT);
+        top.setText("顶部");
+        //添加控件
+        addContentView(top, params);
+
+        FrameLayout.LayoutParams params2 = new FrameLayout.LayoutParams
+                (FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        //设置中间位置
+        params2.gravity=Gravity.CENTER;
+        params2.width=720;
+        params2.height=1080;
+        TextView center=new TextView(this);
+        //字体位于中部
+        center.setGravity(Gravity.CENTER);
+        center.setText("中部");
+        //添加控件
+        addContentView(center, params2);
+
+
+        initData();
+
+        FrameLayout.LayoutParams params3 = new FrameLayout.LayoutParams
+                (FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        //设置底部
+        params3.gravity=Gravity.BOTTOM|Gravity.RIGHT;
+        Button bottom=new Button(this);
+        //字体位于中部
+        bottom.setGravity(Gravity.RIGHT);
+        bottom.setText("底部");
+        //添加控件
+        addContentView(bottom, params3);
+
+
+    } //测试动态添加代码
+
+
 
     @Override public void onBackPressed() {
         L.i("back "+getFragmentManager().getBackStackEntryCount());
