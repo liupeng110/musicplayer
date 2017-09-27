@@ -20,7 +20,6 @@ import org.xutils.x;
 
 public class Activity_Base extends Activity {
     public String tag =this.getClass().getSimpleName();
-    ImmersionBar mImmersionBar;
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         L.i(tag,"注入base的onCreate()");

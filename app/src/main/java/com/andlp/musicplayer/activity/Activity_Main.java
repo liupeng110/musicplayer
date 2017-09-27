@@ -3,13 +3,9 @@ package com.andlp.musicplayer.activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -17,7 +13,6 @@ import android.widget.TextView;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.fragment.Fragment_Local;
 import com.andlp.musicplayer.util.L;
-import com.gyf.barlibrary.ImmersionBar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qihoo360.replugin.RePlugin;
 
@@ -37,7 +32,6 @@ public class Activity_Main extends Activity_Base {
     @ViewInject(R.id.btn3) private Button btn3;
     @ViewInject(R.id.btn4) private Button btn4;
     @Override protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);initView();
 
     }
@@ -49,7 +43,7 @@ public class Activity_Main extends Activity_Base {
     }
 
     private void initData(){
-        initSlidingMenu();
+//        initSlidingMenu();//导致状态栏呈深色不透明
     }
 
     private void initSlidingMenu(){
