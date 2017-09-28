@@ -45,7 +45,7 @@ public class Activity_Group extends ActivityGroup{
         content.removeAllViews();
         myview=getLocalActivityManager().startActivity(
                 "Module1",
-                new Intent(Activity_Group.this,Activity_Welcome.class)//FLAG_ACTIVITY_CLEAR_TOP
+                new Intent(Activity_Group.this,Activity_Player.class)//FLAG_ACTIVITY_CLEAR_TOP
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ))//FLAG_ACTIVITY_BROUGHT_TO_FRONT
                 .getDecorView();
         myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));

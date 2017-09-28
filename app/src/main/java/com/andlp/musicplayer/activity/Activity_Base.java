@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.andlp.musicplayer.util.L;
-import com.gyf.barlibrary.ImmersionBar;
 
 import org.xutils.x;
 
@@ -24,9 +23,6 @@ public class Activity_Base extends Activity {
         super.onCreate(savedInstanceState);
         L.i(tag,"注入base的onCreate()");
         x.view().inject(this);
-//        mImmersionBar = ImmersionBar.with(this);
-//        mImmersionBar.init();   //所有子类都将继承这些相同的属性
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0沉浸状态栏
             //透明状态栏
