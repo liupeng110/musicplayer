@@ -18,6 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 }
 
 apply plugin: 'replugin-host-gradle'
@@ -27,6 +33,7 @@ repluginHostConfig {
     // 可以在这里自定义常驻进程的名字
     // persistentName = ":XXXXService"
 }
+
 
 repositories {
     maven { url "http://jzaccone.github.io/SlidingMenu-aar" }
@@ -52,7 +59,7 @@ dependencies {
 //    compile 'com.gyf.barlibrary:barlibrary:2.3.0'//沉浸式状态栏
 
     compile 'com.shuyu:gsyVideoPlayer-java:2.0.8'
-    compile 'com.shuyu:gsyVideoPlayer-ex_so:2.0.8'
+//    compile 'com.shuyu:gsyVideoPlayer-ex_so:2.0.8'
 
 
 }
