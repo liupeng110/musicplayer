@@ -9,9 +9,11 @@ import android.widget.EditText;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.util.L;
 
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.io.IOException;
 
@@ -98,6 +100,14 @@ public class Activity_Player extends Activity_Base{
 
 
     }
+
+private void test(){
+    RequestParams params = new RequestParams("");
+//    x.http().get(params);
+
+
+
+}
 
 
 

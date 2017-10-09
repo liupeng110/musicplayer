@@ -70,10 +70,13 @@ public class Activity_Group extends ActivityGroup{
 
 
     @Override public void onBackPressed() {
-        L.i("back ");
-        content.removeView(myview);
-        myview=null;
-//        super.onBackPressed();
+        L.i("group---back");
+        if (myview==null){
+            super.onBackPressed();
+        }else {
+            content.removeView(myview);
+            myview = null;
+        }
     }
 
     @Override

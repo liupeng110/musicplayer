@@ -196,9 +196,15 @@ public class Activity_Main extends Activity_Base {
 
 
     @Override public void onBackPressed() {
+        getFragmentManager().executePendingTransactions();
         L.i("back "+getFragmentManager().getBackStackEntryCount());
-        getFragmentManager().popBackStack();
-//        super.onBackPressed();
+
+        if (getFragmentManager().getBackStackEntryCount()>0){
+            getFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
+        }
+
     }
 
 
