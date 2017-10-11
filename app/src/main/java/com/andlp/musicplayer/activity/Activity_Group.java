@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,10 +34,14 @@ import java.security.MessageDigest;
  */
 @ContentView(R.layout.activity_group)
 public class Activity_Group extends ActivityGroup{
-   @ViewInject(R.id.cc) LinearLayout content ;
-   @ViewInject(R.id.bottom) Button bottom ;
+    @ViewInject(R.id.cc) LinearLayout content ;
+    @ViewInject(R.id.bottom) Button bottom ;
+
+    @ViewInject(R.id.group_zuo) Button zuo ;
+    @ViewInject(R.id.group_you) Button you ;
     View myview;
 
+    TTMediaPlayer player;
 
 
 
@@ -48,6 +53,15 @@ public class Activity_Group extends ActivityGroup{
 
 
 
+    @Event(value = R.id.group_zuo,type = View.OnClickListener.class)
+    private void zuo(View view) {
+        player.setPosition(player.getPosition()-1500,0);
+    }
+
+    @Event(value = R.id.group_you,type = View.OnClickListener.class)
+    private void yuo(View view) {
+        player.setPosition(player.getPosition()+1500,0);
+    }
 
     @Event(value = R.id.bottom,type = View.OnClickListener.class)
     private void bottom(View view){
@@ -81,17 +95,27 @@ public class Activity_Group extends ActivityGroup{
 
 
     private void mediaPlay(){
-        TTMediaPlayer instance = TTMediaPlayer.instance(mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
-        instance.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
-        instance.setDataSource("/mnt/sdcard/aaa.ape",0);
-        instance.play();
-
+        player = TTMediaPlayer.instance(mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
+        player.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
+        player.setDataSource("/mnt/sdcard/aaa.flac",0);
+        player.play();
 
     }
+    private MediaPlayer.OnPreparedListener onPreparedListener =new MediaPlayer.OnPreparedListener() {
+        @Override public void onPrepared(MediaPlayer mp) {
+            L.i("tag", "onPrepared:" + mp.getDuration());
+            L.i("tag", "onPrepared:" + mp.getCurrentPosition());
+        }
+    };
+
 
     private TTMediaPlayer.OnMediaPlayerNotifyEventListener notifyEventListener = new TTMediaPlayer.OnMediaPlayerNotifyEventListener(){
-        @Override public void onMediaPlayerNotify(int i, int i2, int i3, Object obj) {
-               L.i("tag中i："+i+",i2:"+i2+",i3:"+i3+",obj:"+obj);
+        @Override public void onMediaPlayerNotify(int MsgId, int i2, int i3, Object obj) {
+            L.i("MediaPlayerProxy", "MsgId:" + MsgId);
+
+            L.i("tag中MsgId："+MsgId+",i2:"+i2+",i3:"+i3+",obj:"+obj);
+
+
         }
     };
 
