@@ -1,6 +1,10 @@
 package com.andlp.musicplayer.activity;
 
 import android.app.ActivityGroup;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +14,7 @@ import android.widget.LinearLayout;
 import com.andlp.musicplayer.R;
 import com.sds.android.ttpod.media.MediaTag;
 import com.andlp.musicplayer.util.L;
+import com.sds.android.ttpod.media.player.TTMediaPlayer;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -19,6 +24,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.ByteArrayOutputStream;
+import java.security.MessageDigest;
 
 
 /**
@@ -29,6 +36,9 @@ public class Activity_Group extends ActivityGroup{
    @ViewInject(R.id.cc) LinearLayout content ;
    @ViewInject(R.id.bottom) Button bottom ;
     View myview;
+
+
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);
@@ -41,7 +51,8 @@ public class Activity_Group extends ActivityGroup{
 
     @Event(value = R.id.bottom,type = View.OnClickListener.class)
     private void bottom(View view){
-//        content.removeAllViews();
+
+//        content.removeAllViews();//打开子activity
 //        myview=getLocalActivityManager().startActivity(
 //                "Module1",
 //                new Intent(Activity_Group.this,Activity_Player.class)//FLAG_ACTIVITY_CLEAR_TOP
@@ -50,7 +61,80 @@ public class Activity_Group extends ActivityGroup{
 //        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 //        content.addView(myview);
 
-        MediaTag tag =  MediaTag.createMediaTag("/mnt/sdcard/aaa.flac",true);
+
+//         mediaTag("/mnt/sdcard/aaa.flac");//测试mediatag
+         mediaPlay();
+
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void rec_chiled(String str) {
+       if(str.startsWith("finish")){
+           str=str.substring(7,str.length());
+           switch (str){
+               case "welcome":content.removeView(myview);myview=null;
+           }
+           L.i("group接收到消息--->"+str);
+       }
+    }
+
+
+    private void mediaPlay(){
+        TTMediaPlayer instance = TTMediaPlayer.instance(mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
+        instance.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
+        instance.setDataSource("/mnt/sdcard/aaa.ape",0);
+        instance.play();
+
+
+    }
+
+    private TTMediaPlayer.OnMediaPlayerNotifyEventListener notifyEventListener = new TTMediaPlayer.OnMediaPlayerNotifyEventListener(){
+        @Override public void onMediaPlayerNotify(int i, int i2, int i3, Object obj) {
+               L.i("tag中i："+i+",i2:"+i2+",i3:"+i3+",obj:"+obj);
+        }
+    };
+
+
+    private static byte[] mda_byte(Context context){
+            byte[] toByteArray;
+            Exception e;
+            try {
+                PackageInfo packageInfo = context.getPackageManager().getPackageInfo("com.andlp.musicplayer", PackageManager.GET_SIGNATURES);
+                MessageDigest instance = MessageDigest.getInstance("MD5");
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                for (Signature toByteArray2 : packageInfo.signatures) {
+                    L.i("签名信息："+toByteArray2.toCharsString());
+                    byteArrayOutputStream.write(instance.digest(toByteArray2.toByteArray()));
+                }
+                toByteArray = byteArrayOutputStream.toByteArray();
+                L.i("签名信息--size："+toByteArray.length);
+                for (byte b:toByteArray){
+                    L.i("签名信息--："+b);
+                }
+
+                try {
+                    byteArrayOutputStream.close();
+                } catch (Exception e2) {
+                    e = e2;
+                    e.printStackTrace();
+                    return toByteArray;
+                }
+            } catch (Exception e3) {
+                Exception exception = e3;
+                toByteArray = null;
+                e = exception;
+                e.printStackTrace();
+                return toByteArray;
+            }
+            return toByteArray;
+
+    }
+
+
+
+    private void mediaTag(String path){
+        MediaTag tag =  MediaTag.createMediaTag(path,true);
         L.i("tag:"+tag.getAlbum());
         L.i("tag:"+tag.getArtist());
         L.i("tag:"+tag.getComment());
@@ -79,30 +163,9 @@ public class Activity_Group extends ActivityGroup{
         L.i("tag:"+tag.year());
         L.i("tag:"+tag.sampleRate());
         L.i("tag:"+tag.cover());
-         tag.save();
-         tag.close();
-
-
-
-
-
+        tag.save();
+        tag.close();
     }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void rec_chiled(String str) {
-       if(str.startsWith("finish")){
-           str=str.substring(7,str.length());
-           switch (str){
-               case "welcome":content.removeView(myview);myview=null;
-           }
-           L.i("group接收到消息--->"+str);
-
-       }
-
-
-    }
-
 
 
     @Override public void onBackPressed() {

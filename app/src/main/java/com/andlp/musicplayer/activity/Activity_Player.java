@@ -17,8 +17,6 @@ import org.xutils.x;
 
 import java.io.IOException;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * 717219917@qq.com  2017/9/28 15:50
@@ -28,7 +26,6 @@ public class Activity_Player extends Activity_Base{
      @ViewInject(R.id.player) Button button;
      @ViewInject(R.id.pause)  Button pause;
      @ViewInject(R.id.editText)  EditText editText;
-      IjkMediaPlayer  myplayer;
 
 
     @Override
@@ -36,7 +33,6 @@ public class Activity_Player extends Activity_Base{
         super.onCreate(savedInstanceState);
         button.setText("player");
 
-        initIjk();
 
     }
 
@@ -59,54 +55,17 @@ public class Activity_Player extends Activity_Base{
     }
 
   private void play(String path){
-//      myplayer.prepareAsync();
-       try { myplayer.setDataSource(path); } catch (IOException e) { e.printStackTrace(); }
-           myplayer.start();
   }
 
 
-    private void initIjk(){
-        try {
-            IjkMediaPlayer.loadLibrariesOnce(null);
-            IjkMediaPlayer.native_profileBegin("libijkplayer.so");
-        } catch (Throwable e) {
-            e.printStackTrace();
-            L.i("Player", "加载失败loadLibraries error");
-        }
-
-        myplayer = new IjkMediaPlayer();
-        enableHardwareDecoding();
-    }
-
-
-    private void enableHardwareDecoding(){
-        if (myplayer instanceof IjkMediaPlayer){
-            IjkMediaPlayer player = (IjkMediaPlayer) myplayer;
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 60);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 0);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
-            player.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 1);
-        }
-        myplayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(IMediaPlayer iMediaPlayer) {
-                myplayer.start();
-            }
-        });
 
 
 
-    }
+
 
 private void test(){
     RequestParams params = new RequestParams("");
 //    x.http().get(params);
-
-
-
 }
 
 

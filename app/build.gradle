@@ -60,7 +60,7 @@ dependencies {
 
 //    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.3'
 //    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.3'
-    compile 'com.shuyu:gsyVideoPlayer-java:2.0.8'
+//    compile 'com.shuyu:gsyVideoPlayer-java:2.0.8'
 //    compile 'com.shuyu:gsyVideoPlayer-ex_so:2.0.8'
 
 
