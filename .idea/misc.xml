@@ -21,6 +21,7 @@
         <option name="FENCED_CODE_BLOCKS" value="true" />
         <option name="FOOTNOTES" value="false" />
         <option name="HARDWRAPS" value="false" />
+        <option name="HTML_DEEP_PARSER" value="false" />
         <option name="INSERTED" value="false" />
         <option name="QUOTES" value="false" />
         <option name="RELAXEDHRULES" value="true" />
@@ -110,6 +111,9 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="masterDetails">
     <states>
