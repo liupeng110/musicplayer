@@ -75,7 +75,7 @@ public class Activity_Group extends ActivityGroup{
 //        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 //        content.addView(myview);
 
-//         mediaTag("/mnt/sdcard/aaa.flac");//测试mediatag
+           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
            mediaPlay();
 
     }
@@ -111,7 +111,6 @@ public class Activity_Group extends ActivityGroup{
     private TTMediaPlayer.OnMediaPlayerNotifyEventListener notifyEventListener = new TTMediaPlayer.OnMediaPlayerNotifyEventListener(){
         @Override public void onMediaPlayerNotify(int MsgId, int i2, int i3, Object obj) {
             L.i("MediaPlayerProxy", "MsgId:" + MsgId);
-
             L.i("tag中MsgId："+MsgId+",i2:"+i2+",i3:"+i3+",obj:"+obj);
 
 
@@ -178,16 +177,46 @@ public class Activity_Group extends ActivityGroup{
         L.i("tag:"+tag.getArtist());
         L.i("tag:"+tag.getComment());
         L.i("tag:"+tag.getGenre());
-        L.i("tag:"+tag.getTitle());
+        L.i("tag标题:"+tag.getTitle());
         L.i("tag:"+tag.bitRate());
-        L.i("tag:"+tag.channels());
-        L.i("tag:"+tag.duration());//
+        L.i("tag声道:"+tag.channels());
+        L.i("tag时间:"+tag.duration());//
+        L.i("tag格式化后时间:"+formatTime(tag.duration()));
         L.i("tag:"+tag.track());
-        L.i("tag:"+tag.year());
+        L.i("tag年代:"+tag.year());
         L.i("tag:"+tag.sampleRate());
         L.i("tag:"+tag.cover());
         tag.save();
         tag.close();
+    }
+
+
+    public String formatTime(long time)
+    {
+        time = time/ 1000;
+        String strHour = "" + (time/3600);
+        String strMinute = "" + time%3600/60;
+        String strSecond = "" + time%3600%60;
+
+        strHour = strHour.length() < 2? "0" + strHour: strHour;
+        strMinute = strMinute.length() < 2? "0" + strMinute: strMinute;
+        strSecond = strSecond.length() < 2? "0" + strSecond: strSecond;
+
+        String strRsult = "";
+
+        if (!strHour.equals("00"))
+        {
+            strRsult += strHour + ":";
+        }
+
+        if (!strMinute.equals("00"))
+        {
+            strRsult += strMinute + ":";
+        }
+
+        strRsult += strSecond;
+
+        return strRsult;
     }
 
 
@@ -205,5 +234,8 @@ public class Activity_Group extends ActivityGroup{
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        try {player.pause();}catch (Throwable t){t.printStackTrace();}
+//        try {player.release();}catch (Throwable t){t.printStackTrace();}
+//        player=null;
     }
 }
