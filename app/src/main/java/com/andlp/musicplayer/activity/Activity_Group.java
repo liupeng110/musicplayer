@@ -75,9 +75,8 @@ public class Activity_Group extends ActivityGroup{
 //        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 //        content.addView(myview);
 
-
 //         mediaTag("/mnt/sdcard/aaa.flac");//测试mediatag
-         mediaPlay();
+           mediaPlay();
 
     }
 
@@ -97,7 +96,7 @@ public class Activity_Group extends ActivityGroup{
     private void mediaPlay(){
         player = TTMediaPlayer.instance(mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
         player.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
-        player.setDataSource("/mnt/sdcard/aaa.flac",0);
+        player.setDataSource("/mnt/sdcard/aaa.ape",0);
         player.play();
 
     }
