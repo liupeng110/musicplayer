@@ -25,12 +25,9 @@ public class Activity_Base extends Activity {
         x.view().inject(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0沉浸状态栏
-            //透明状态栏
-            Window window = getWindow();
+            Window window = getWindow();//透明状态栏
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //设置状态栏的颜色
-            window.setStatusBarColor(Color.TRANSPARENT);
-
+            window.setStatusBarColor(Color.TRANSPARENT);//设置状态栏的颜色
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
