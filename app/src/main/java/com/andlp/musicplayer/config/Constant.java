@@ -5,7 +5,7 @@ package com.andlp.musicplayer.config;
  */
 
 public class Constant {
-
+     public static int SERVICE_ID=110;
 
 
 }

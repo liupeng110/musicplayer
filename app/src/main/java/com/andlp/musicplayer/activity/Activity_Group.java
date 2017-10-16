@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.service.PlayService;
 import com.sds.android.ttpod.media.MediaTag;
 import com.andlp.musicplayer.util.L;
@@ -47,9 +48,7 @@ public class Activity_Group extends ActivityGroup{
     @ViewInject(R.id.group_zuo) Button zuo ;
     @ViewInject(R.id.group_you) Button you ;
     View myview;
-
     TTMediaPlayer player;
-
     private PlayService.MyBinder mbinder;//service中返回
 
 
@@ -64,15 +63,15 @@ public class Activity_Group extends ActivityGroup{
 
     @Event(value = R.id.group_zuo,type = View.OnClickListener.class)
     private void zuo(View view) {
-        player.setPosition(player.getPosition()-1500,0);
+        player.setPosition(player.getPosition()-4500,0);
     }
 
     @Event(value = R.id.group_you,type = View.OnClickListener.class)
     private void yuo(View view) {
-        player.setPosition(player.getPosition()+1500,0);
+        player.setPosition(player.getPosition()+4500,0);
     }
 
-    @Event(value = R.id.bottom,type = View.OnClickListener.class)
+    @Event(value = R.id.bottom,type = View.OnClickListener.class)//底部按钮事件监听
     private void bottom(View view){
 
 //        content.removeAllViews();//打开子activity
@@ -105,29 +104,27 @@ public class Activity_Group extends ActivityGroup{
 
 
     private void startService(){//启动服务
-        Intent      intent = new Intent();
+        Intent  intent = new Intent();
         intent.setClass(Activity_Group.this, PlayService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Activity_Group.this.bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
         startService(intent);
     }
 
-private void clearNotifi(){
-    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//    mNotificationManager.
-}
+   private void clearNotifi(){   //清空
+         NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        noti_manager.cancel(Constant.SERVICE_ID);
+    }
 
 
     private ServiceConnection mServiceConnection = new ServiceConnection()
     {
-        @Override
-        public void onServiceDisconnected(ComponentName name)
+        @Override public void onServiceDisconnected(ComponentName name)
         {
             Log.v("service","断开"+name.toString());
         }
 
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service)
+        @Override public void onServiceConnected(ComponentName name, IBinder service)
         {
             // bindService成功的时候返回service的引用
             Log.v("service","链接"+name.toString());
@@ -143,23 +140,14 @@ private void clearNotifi(){
         player.play();
 
     }
-    private MediaPlayer.OnPreparedListener onPreparedListener =new MediaPlayer.OnPreparedListener() {
-        @Override public void onPrepared(MediaPlayer mp) {
-            L.i("tag", "onPrepared:" + mp.getDuration());
-            L.i("tag", "onPrepared:" + mp.getCurrentPosition());
-        }
-    };
 
 
     private TTMediaPlayer.OnMediaPlayerNotifyEventListener notifyEventListener = new TTMediaPlayer.OnMediaPlayerNotifyEventListener(){
         @Override public void onMediaPlayerNotify(int MsgId, int i2, int i3, Object obj) {
             L.i("MediaPlayerProxy", "MsgId:" + MsgId);
             L.i("tag中MsgId："+MsgId+",i2:"+i2+",i3:"+i3+",obj:"+obj);
-
-
         }
     };
-
 
     private static byte[] mda_byte(Context context){
             byte[] toByteArray;
@@ -196,8 +184,6 @@ private void clearNotifi(){
 
     }
 
-
-
     private void mediaTag(String path){
         MediaTag tag =  MediaTag.createMediaTag(path,true);
         L.i("tag:"+tag.getAlbum());
@@ -233,7 +219,6 @@ private void clearNotifi(){
         tag.close();
     }
 
-
     public String formatTime(long time)
     {
         time = time/ 1000;
@@ -262,7 +247,6 @@ private void clearNotifi(){
         return strRsult;
     }
 
-
     @Override public void onBackPressed() {
         L.i("group---back");
         if (myview==null){
@@ -273,12 +257,13 @@ private void clearNotifi(){
         }
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        try {player.pause();}catch (Throwable t){t.printStackTrace();}
-//        try {player.release();}catch (Throwable t){t.printStackTrace();}
-//        player=null;
+        L.i("group","mServiceConnection:"+mServiceConnection);
+        L.i("group","player:"+player);
+        if(mServiceConnection!=null){ unbindService(mServiceConnection);  }
+        if(player!=null){ player.pause(); }
+
     }
 }
