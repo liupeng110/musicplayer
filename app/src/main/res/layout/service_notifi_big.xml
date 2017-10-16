@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="130dp"
     android:id="@+id/notice_view_type_0">
 
     <ImageView
@@ -12,77 +12,101 @@
         android:layout_height="130dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="1dp"
         />
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="55dp"
+            android:orientation="vertical"
+            >
 
             <TextView
-                android:id="@+id/tag_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 android:layout_marginTop="10dp"
-                android:text="校园实时热点"
-                android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Title"
-                android:textSize="12sp"
-                tools:text="校园实时热点" />
+                android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Line2"
+                android:lines="1"
+                android:textSize="15dp"
+                android:text="弹剑记.落魄江湖十五载"
+                />
 
             <TextView
-                android:id="@+id/time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/tag_tv"
-                android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Time"
-                android:textSize="8sp"
-                tools:text="10:23" />
+                android:id="@+id/content_tv"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:textSize="13dp"
+                android:layout_marginTop="2dp"
+                android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Line2"
+                android:text="于魁智"
+                />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@mipmap/notifi_ci"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="35dp"
+            />
+
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@mipmap/notifi_close"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
+            >
 
             <ImageView
-                android:id="@+id/close_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/notifi_close"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_weight="1"
+                android:src="@mipmap/notifi_left" />
 
-        </RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/notifi_pause" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/notifi_right" />
 
 
-        <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Line2"
-            tools:text="我浙83.70，挺进CUBA东南赛区啦！"
-            android:layout_marginTop="4dp"
-            android:singleLine="true"/>
-
-        <TextView
-            android:id="@+id/content_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="9sp"
-            android:textAppearance="@style/TextAppearance.StatusBar.EventContent.Info"
-            tools:text="41个同校小伙伴参与讨论"
-            android:layout_marginTop="4dp"
-            android:singleLine="true"/>
+        </LinearLayout>
 
 
 
 
+    </RelativeLayout>
 
-    </LinearLayout>
+
+
 
 </LinearLayout>

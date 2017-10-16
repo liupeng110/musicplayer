@@ -45,7 +45,7 @@ public class PlayService extends Service {
 
 //        notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
 
-        notifi_0("标题","内容");
+        notifi_0("弹剑记.落魄江湖十五载","于魁智");
         return super.onStartCommand(intent, flags, startId);
     }
 
