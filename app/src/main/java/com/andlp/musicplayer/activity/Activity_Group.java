@@ -1,18 +1,25 @@
 package com.andlp.musicplayer.activity;
 
 import android.app.ActivityGroup;
+import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.service.PlayService;
 import com.sds.android.ttpod.media.MediaTag;
 import com.andlp.musicplayer.util.L;
 import com.sds.android.ttpod.media.player.TTMediaPlayer;
@@ -43,12 +50,14 @@ public class Activity_Group extends ActivityGroup{
 
     TTMediaPlayer player;
 
+    private PlayService.MyBinder mbinder;//service中返回
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+
     }
 
 
@@ -75,8 +84,10 @@ public class Activity_Group extends ActivityGroup{
 //        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 //        content.addView(myview);
 
-           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
-           mediaPlay();
+//           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
+//           mediaPlay();
+
+        startService();
 
     }
 
@@ -92,6 +103,38 @@ public class Activity_Group extends ActivityGroup{
        }
     }
 
+
+    private void startService(){//启动服务
+        Intent      intent = new Intent();
+        intent.setClass(Activity_Group.this, PlayService.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Activity_Group.this.bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+        startService(intent);
+    }
+
+private void clearNotifi(){
+    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//    mNotificationManager.
+}
+
+
+    private ServiceConnection mServiceConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceDisconnected(ComponentName name)
+        {
+            Log.v("service","断开"+name.toString());
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service)
+        {
+            // bindService成功的时候返回service的引用
+            Log.v("service","链接"+name.toString());
+            //参数service就是服务onBind方法的返回值，取出service就可以在活动中使用
+            mbinder = (PlayService.MyBinder)service;
+        }
+    } ;
 
     private void mediaPlay(){
         player = TTMediaPlayer.instance(mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");

@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
     <application
         android:allowBackup="true"
@@ -23,6 +24,7 @@
         <activity android:name=".activity.Activity_Welcome"/>
         <activity android:name=".activity.Activity_Group"/>
         <activity android:name=".activity.Activity_Player"/>
+        <service android:name=".service.PlayService"/>
         
     </application>
 

@@ -86,7 +86,7 @@ public class Activity_Main extends Activity_Base {
     private void btn4(View view) {
         L.i(tag,"单击  btn4");
         addFragment();
-         }
+      }
 
 
     /**
@@ -191,7 +191,7 @@ public class Activity_Main extends Activity_Base {
         addContentView(bottom, params3);
 
 
-    } //测试动态添加代码
+    } //测试动态添加代码 未使用
 
 
 
