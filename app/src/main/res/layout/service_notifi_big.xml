@@ -7,7 +7,7 @@
     android:id="@+id/notice_view_type_0_big">
 
     <ImageView
-        android:id="@+id/icon_iv"
+        android:id="@+id/icon_iv_big"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:scaleType="centerCrop"
@@ -52,17 +52,18 @@
 
 
         <ImageView
+            android:id="@+id/notifi_ci_big"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="55dp"
             android:src="@mipmap/notifi_ci"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
             />
 
         <ImageView
-            android:id="@+id/close_iv"
+            android:id="@+id/notifi_close_big"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:src="@mipmap/notifi_close"
@@ -81,18 +82,21 @@
             >
 
             <ImageView
+                android:id="@+id/notifi_left_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/notifi_left" />
 
             <ImageView
+                android:id="@+id/notifi_pause_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/notifi_pause" />
 
             <ImageView
+                android:id="@+id/notifi_right_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

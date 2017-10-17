@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Activity_Welcome"/>
-        <activity android:name=".activity.Activity_Group"/>
+        <activity android:name=".activity.Activity_Group"
+            android:launchMode="singleInstance"
+            />
         <activity android:name=".activity.Activity_Player"/>
         <service android:name=".service.PlayService"/>
 

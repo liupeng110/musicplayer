@@ -11,25 +11,39 @@ import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.andlp.musicplayer.MyApp;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.activity.Activity_Group;
+import com.andlp.musicplayer.activity.Activity_Welcome;
 import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.util.L;
+
+import java.lang.reflect.Method;
 
 /**
  * 717219917@qq.com  2017/9/22 11:18
  */
 public class PlayService extends Service {
-    String tag = "PlayService";
+    public static final String ACTION_CLOSE= "com.andlp.musicplayer.action.close";
+    public static final String ACTION_LEFT    = "com.andlp.musicplayer.action.left";
+    public static final String ACTION_PAUSE= "com.andlp.musicplayer.action.pause";
+    public static final String ACTION_RIGHT= "com.andlp.musicplayer.action.right";
+    public static final String ACTION_CI         = "com.andlp.musicplayer.action.ci";
+    public static final String ACTION_OPEN = "com.andlp.musicplayer.action.open";//进入主界面
+    String tag = "PlayService",title,content;
     private int num = 0;
     public static final int TYPE_Media = 7;
     PlayBroadcastReceiver  receiver=null;                            //接收,处理通知栏按键事件
+    NotificationCompat.Builder builder;
+    Notification notification;
+    private boolean ci_press=false,play_press=true;
     private MyBinder myBinder = new MyBinder(); //创建MyBinder实例  返回用
     @Override public IBinder onBind(Intent intent) {
         return null;
@@ -37,65 +51,104 @@ public class PlayService extends Service {
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(tag, "onStartCommand()");
-    if (receiver==null){registerBroadcastReceiver();}
+        registerBroadcastReceiver();
         notifi_my("弹剑记.落魄江湖十五载","于魁智","于魁智-弹剑记.落魄江湖十五载");
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public static final String NOTICE_ID_KEY = "NOTICE_ID";
-    public static final String ACTION_CLOSE_NOTIFI= "com.andlp.musicplayer.action.close";
 
-    private void notifi_my(String title,String content,String ticker){//自定义通知
-      android.support.v4.app.NotificationCompat.Builder builder = new android.support.v4.app.NotificationCompat.Builder(this);
+
+
+    private void notifi_my(String title_temp,String content_temp,String ticker){//自定义通知
+         title=title_temp;content=content_temp;
+        builder = new NotificationCompat.Builder(this);
         builder.setOngoing(true);
         builder.setTicker(ticker);
-        builder.setPriority(android.support.v4.app.NotificationCompat.PRIORITY_MAX);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setShowWhen(false);
+        notify_small();//初始化小通知栏
+        notify_big();   //初始化大通知栏
+
+          notification = builder.build();
+        startForeground(Constant.SERVICE_ID, notification);// 服务 id,取消时用
+
+    }
+
+    private RemoteViews notify_small(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.service_notifi_small);
         remoteViews.setTextViewText(R.id.title_tv, title);
         remoteViews.setTextViewText(R.id.content_tv, content);
         remoteViews.setImageViewResource(R.id.icon_iv, R.mipmap.img_notification);
-        remoteViews.setInt(R.id.close_iv, "setColorFilter", getIconColor());
+        remoteViews.setInt(R.id.notifi_close, "setColorFilter", getIconColor());
 
-//        Intent intent = new Intent(this, Activity_Group.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        int requestCode = (int) SystemClock.uptimeMillis();
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        remoteViews.setOnClickPendingIntent(R.id.notice_view_type_0, pendingIntent);//一个监听
+        Intent intent_left = new Intent(ACTION_LEFT);//监听 上一曲
+        PendingIntent pendingIntent_left = PendingIntent.getBroadcast(this, 1, intent_left, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notifi_left, pendingIntent_left);                  //一个监听
 
-        Intent intent1 = new Intent(ACTION_CLOSE_NOTIFI);//关闭
-        int requestCode1 = (int) SystemClock.uptimeMillis();
-        intent1.putExtra(NOTICE_ID_KEY, R.string.app_name);
-        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this, requestCode1, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.close_iv, pendingIntent1);                  //又一个监听
+
+        Intent intent_pause = new Intent(ACTION_PAUSE);//监听 暂停
+        PendingIntent pendingIntent_pause = PendingIntent.getBroadcast(this, 2, intent_pause, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notifi_pause, pendingIntent_pause);      //一个监听
+
+        Intent intent_right = new Intent(ACTION_RIGHT);//监听 下一曲
+        PendingIntent pendingIntent_right = PendingIntent.getBroadcast(this, 3, intent_right, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notifi_right, pendingIntent_right);           //一个监听
+
+
+        Intent intent1 = new Intent(ACTION_CLOSE);//监听关闭
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this, 4, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notifi_close, pendingIntent1);                  //又一个监听
+
+        Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
+        PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.icon_iv, pendingIntent_open);           //又一个监听
+
 
         builder.setSmallIcon(R.mipmap.img_notification);
         builder.setContent(remoteViews);//通知栏小布局
-        builder.setShowWhen(false);
+        return remoteViews;
+    }
 
+    private RemoteViews  notify_big(){
         RemoteViews remoteViews2 = new RemoteViews(getPackageName(), R.layout.service_notifi_big);
         remoteViews2.setTextViewText(R.id.title_tv, title);
         remoteViews2.setTextViewText(R.id.content_tv, content);
-        remoteViews2.setImageViewResource(R.id.icon_iv, R.mipmap.img_notification);
-        remoteViews2.setInt(R.id.close_iv, "setColorFilter", getIconColor());
+        remoteViews2.setImageViewResource(R.id.icon_iv_big, R.mipmap.img_notification);
+        remoteViews2.setInt(R.id.notifi_close_big, "setColorFilter", getIconColor());
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.img_notification));
         builder.setCustomBigContentView(remoteViews2);//通知栏大布局
 
-//        Intent intent_big = new Intent(this, Activity_Group.class);
-//        intent_big.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        int requestCode_big = (int) SystemClock.uptimeMillis();
-//        PendingIntent pendingIntent_big = PendingIntent.getActivity(this, requestCode_big, intent_big, PendingIntent.FLAG_UPDATE_CURRENT);
-//        remoteViews2.setOnClickPendingIntent(R.id.notice_view_type_0_big, pendingIntent_big);//一个监听
 
-        Intent buttonIntent = new Intent(ACTION_CLOSE_NOTIFI);
-        buttonIntent.putExtra(ACTION_CLOSE_NOTIFI, NOTICE_ID_KEY);
-        PendingIntent intent_paly = PendingIntent.getBroadcast(this, 110, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews2.setOnClickPendingIntent(R.id.close_iv, intent_paly);
+        Intent intent_left = new Intent(ACTION_LEFT);//监听 上一曲
+        PendingIntent pendingIntent_left = PendingIntent.getBroadcast(this, 5, intent_left, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.notifi_left_big, pendingIntent_left);//一个监听
 
 
+        Intent intent_pause = new Intent(ACTION_PAUSE);//监听 暂停
+        PendingIntent pendingIntent_pause = PendingIntent.getBroadcast(this, 6, intent_pause, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.notifi_pause_big, pendingIntent_pause);//一个监听
 
-        Notification notification = builder.build();
-        startForeground(Constant.SERVICE_ID, notification);// 服务 id,取消时用
+        Intent intent_right = new Intent(ACTION_RIGHT);//监听 下一曲
+        PendingIntent pendingIntent_right = PendingIntent.getBroadcast(this, 7, intent_right, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.notifi_right_big, pendingIntent_right);//一个监听
+
+
+        Intent intent_close = new Intent(ACTION_CLOSE);//监听关闭
+        PendingIntent pendingIntent_close = PendingIntent.getBroadcast(this, 8, intent_close, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.notifi_close_big, pendingIntent_close);                  //又一个监听
+
+        Intent intent_ci = new Intent(ACTION_CI);//监听关闭
+        PendingIntent pendingIntent_ci = PendingIntent.getBroadcast(this, 8, intent_ci, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.notifi_ci_big, pendingIntent_ci);                                //又一个监听
+
+
+        Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
+        PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 9, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews2.setOnClickPendingIntent(R.id.icon_iv_big, pendingIntent_open);           //又一个监听
+
+       return remoteViews2;
     }
+
     private void notifi_1(){  //默认通知
         android.support.v4.app.NotificationCompat.Builder builder = new android.support.v4.app.NotificationCompat.Builder(this);
         builder.setOngoing(true);
@@ -109,46 +162,104 @@ public class PlayService extends Service {
         startForeground(Constant.SERVICE_ID, notification);// 开始前台服务 id作为标记  取消时用
     }
 
-
+  //自发自收 模拟通知栏按钮事件的过滤器
     private void registerBroadcastReceiver(){
+        L.i(tag+"注册registerBroadcastReceiver");
         receiver = new PlayBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_CLOSE_NOTIFI);
-         registerReceiver(receiver, intentFilter);
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(ACTION_CLOSE);
+        filter.addAction(ACTION_LEFT);
+        filter.addAction(ACTION_PAUSE);
+        filter.addAction(ACTION_RIGHT);
+        filter.addAction(ACTION_CI);
+        filter.addAction(ACTION_OPEN);
+       registerReceiver(receiver, filter);
     }
-
-
+   //他处调用也发广播  兼容通知栏
     public class PlayBroadcastReceiver extends BroadcastReceiver {
-
         @Override  public void onReceive(Context context, Intent intent) {
-            init(context, intent.getAction());
-        }
-
-
-        private void init(Context context, String action) {
-            L.i(tag,"收到广播:"+action);
-
-            if (action.equals("com.andlp.musicplayer.action.play")) {
-
-            }else if (action.equals("com.andlp.musicplayer.action.close")){
-                L.i(tag,"进入close:"+action);
-
-                       clear_notifi();
+            L.i(tag,"收到广播:"+ intent.getAction());
+            switch ( intent.getAction()){
+                case ACTION_CLOSE:   close(); break;
+                case ACTION_LEFT:       left();     break;
+                case ACTION_PAUSE:   pause();break;
+                case ACTION_RIGHT:   right();break;
+                case ACTION_CI:            ci();break;
+                case ACTION_OPEN :   open();break;
             }
         }
+
+
     }
 
+    private void close() {
 
-
-    public void clear_notifi() {
-        stopForeground(true);
+        if (receiver != null) {
+             unregisterReceiver(receiver);
+        }
+        stopForeground(false);
+        Intent stopIntent = new Intent(this, PlayService.class);
+        stopService(stopIntent);
         MyApp.exit();
-//        if (receiver != null) {
-//             unregisterReceiver(receiver);
-//        }
-//        NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        noti_manager.cancel(Constant.SERVICE_ID);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+////        NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+////        noti_manager.cancel(Constant.SERVICE_ID);
     }
+     private void left(){
+
+     }
+     private void pause(){
+         if (play_press) {
+            try{ builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_play);}catch (Throwable t){t.printStackTrace();}
+         }else {
+             try{builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_pause);}catch (Throwable t){t.printStackTrace();}
+         }
+         RemoteViews remoteViews =notify_small(); //重新new因为从builder获取为空
+         if (play_press) {
+             remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_play);
+         }else {
+             remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_pause);
+         }
+         play_press=!play_press;
+         builder.setContent(remoteViews);//通知栏小布局
+         notification = builder.build();
+         startForeground(Constant.SERVICE_ID, notification);//更新通知栏ui
+     }
+     private void right(){
+
+     }
+     private void ci(){  //需要持久化保存
+         if (ci_press){
+             try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci);}catch (Throwable t){t.printStackTrace();}
+         }else {
+           try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci_p);}catch (Throwable t){t.printStackTrace();}
+         }
+         ci_press=!ci_press;
+         notification = builder.build();
+         startForeground(Constant.SERVICE_ID, notification);
+     }
+
+     private void open(){
+         Intent intent = new Intent(this, Activity_Group.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         startActivity(intent);
+         try {
+             Object statusBarManager =  getSystemService("statusbar");
+             Method collapse;
+             if (Build.VERSION.SDK_INT <= 16) {
+                 collapse = statusBarManager.getClass().getMethod("collapse");
+             } else {
+                 collapse = statusBarManager.getClass().getMethod("collapsePanels");
+             }
+             collapse.invoke(statusBarManager);
+         } catch (Exception localException) {
+             localException.printStackTrace();
+         }
+     }
+
+
+
 
     //获取系统通知栏字体默认颜色
     public static int getIconColor(){

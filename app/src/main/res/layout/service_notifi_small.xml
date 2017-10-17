@@ -50,25 +50,28 @@
 
 
         <ImageView
+            android:id="@+id/notifi_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/notifi_left" />
 
         <ImageView
+            android:id="@+id/notifi_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/notifi_pause" />
 
         <ImageView
+            android:id="@+id/notifi_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@mipmap/notifi_right" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/notifi_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

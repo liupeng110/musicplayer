@@ -1,6 +1,7 @@
 package com.andlp.musicplayer.activity;
 
 import android.app.ActivityGroup;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,6 +36,7 @@ import org.xutils.x;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
+import java.util.List;
 
 
 /**
@@ -49,7 +51,7 @@ public class Activity_Group extends ActivityGroup{
     @ViewInject(R.id.group_you) Button you ;
     View myview;
     TTMediaPlayer player;
-    private PlayService.MyBinder mbinder;//service中返回
+//    private PlayService.MyBinder mbinder;//service中返回
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,6 @@ public class Activity_Group extends ActivityGroup{
 
 //           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
 //           mediaPlay();
-
         startService();
 
     }
@@ -103,15 +104,38 @@ public class Activity_Group extends ActivityGroup{
     }
 
 
-    private void startService(){//启动服务
-        Intent  intent = new Intent();
-        intent.setClass(Activity_Group.this, PlayService.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Activity_Group.this.bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
-        startService(intent);
+    private void startService(){//启动服务  先判定是否已开启
+        if (!isServiceWork(this,"com.andlp.musicplayer.service.PlayService")){
+            Intent  intent = new Intent();
+            intent.setClass(Activity_Group.this, PlayService.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Activity_Group.this.bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+            startService(intent);
+        }
+
     }
 
-   private void clearNotifi(){   //清空
+    public boolean isServiceWork(Context mContext, String serviceName) {
+        boolean isWork = false;
+        ActivityManager myAM = (ActivityManager) mContext
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> myList = myAM.getRunningServices(40);
+        if (myList.size() <= 0) {
+            return false;
+        }
+        for (int i = 0; i < myList.size(); i++) {
+            String mName = myList.get(i).service.getClassName().toString();
+            L.i("当前运行:"+mName);
+            if (mName.equals(serviceName)) {
+                isWork = true;
+                break;
+            }
+        }
+        return isWork;
+    }
+
+
+    private void clearNotifi(){   //清空
          NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         noti_manager.cancel(Constant.SERVICE_ID);
     }
@@ -129,7 +153,7 @@ public class Activity_Group extends ActivityGroup{
             // bindService成功的时候返回service的引用
             Log.v("service","链接"+name.toString());
             //参数service就是服务onBind方法的返回值，取出service就可以在活动中使用
-            mbinder = (PlayService.MyBinder)service;
+//            mbinder = (PlayService.MyBinder)service;
         }
     } ;
 
@@ -262,8 +286,8 @@ public class Activity_Group extends ActivityGroup{
         EventBus.getDefault().unregister(this);
         L.i("group","mServiceConnection:"+mServiceConnection);
         L.i("group","player:"+player);
-        if(mServiceConnection!=null){ unbindService(mServiceConnection);  }
-        if(player!=null){ player.pause(); }
+        try{ unbindService(mServiceConnection);mServiceConnection=null; }catch (Throwable t){t.printStackTrace();}
+//        try{ if(player!=null){ player.pause(); }}catch (Throwable t){t.printStackTrace();}//播放--后台服务
 
     }
 }
