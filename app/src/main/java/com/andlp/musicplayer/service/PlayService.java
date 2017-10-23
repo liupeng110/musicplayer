@@ -16,11 +16,13 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.andlp.musicplayer.MyApp;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.activity.Activity_Group;
+import com.andlp.musicplayer.activity.Activity_Main;
 import com.andlp.musicplayer.activity.Activity_Welcome;
 import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.util.L;
@@ -221,6 +223,9 @@ public class PlayService extends Service {
          }else {
              remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_pause);
          }
+         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.VISIBLE);
+         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.INVISIBLE);
+         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.GONE);
          play_press=!play_press;
          builder.setContent(remoteViews);//通知栏小布局
          notification = builder.build();
@@ -242,7 +247,13 @@ public class PlayService extends Service {
 
      private void open(){
          Intent intent = new Intent(this, Activity_Group.class);
-         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+       //  intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        // intent.setAction(Intent.ACTION_MAIN);
+         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        // Intent intent = new Intent(this, Activity_Group.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
          startActivity(intent);
          try {
              Object statusBarManager =  getSystemService("statusbar");

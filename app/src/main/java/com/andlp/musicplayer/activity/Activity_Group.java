@@ -14,7 +14,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -53,15 +55,25 @@ public class Activity_Group extends ActivityGroup{
     TTMediaPlayer player;
 //    private PlayService.MyBinder mbinder;//service中返回
 
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(0x80000000, 0x80000000);
         EventBus.getDefault().register(this);
 
+        if (!isTaskRoot()) {//判断是否最底层
+             L.i("最底层");
+       }
     }
 
-
+    @Override public boolean onKeyDown( int keyCode, KeyEvent event) {
+        L.i("进入home键");
+        if (keyCode == event. KEYCODE_HOME) {
+            L.i("进入home键00");
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Event(value = R.id.group_zuo,type = View.OnClickListener.class)
     private void zuo(View view) {
@@ -108,7 +120,7 @@ public class Activity_Group extends ActivityGroup{
         if (!isServiceWork(this,"com.andlp.musicplayer.service.PlayService")){
             Intent  intent = new Intent();
             intent.setClass(Activity_Group.this, PlayService.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Activity_Group.this.bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
             startService(intent);
         }
@@ -281,12 +293,15 @@ public class Activity_Group extends ActivityGroup{
         }
     }
 
+
+
+
     @Override protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        L.i("group","mServiceConnection:"+mServiceConnection);
-        L.i("group","player:"+player);
-        try{ unbindService(mServiceConnection);mServiceConnection=null; }catch (Throwable t){t.printStackTrace();}
+       //  L.i("group","mServiceConnection:"+mServiceConnection);
+       // L.i("group","player:"+player);
+      try{ unbindService(mServiceConnection);mServiceConnection=null; }catch (Throwable t){t.printStackTrace();}
 //        try{ if(player!=null){ player.pause(); }}catch (Throwable t){t.printStackTrace();}//播放--后台服务
 
     }
