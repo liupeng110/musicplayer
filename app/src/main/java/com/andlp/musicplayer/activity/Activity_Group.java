@@ -119,7 +119,7 @@ public class Activity_Group extends ActivityGroup{
     private void mediaPlay(){
         player = TTMediaPlayer.instance(SingnatureUtil.mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
         player.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
-        player.setDataSource("/mnt/sdcard/aaa.ape",0);
+        player.setDataSource("/mnt/sdcard/aaa.ape",0); 
         player.play();
 
     }
