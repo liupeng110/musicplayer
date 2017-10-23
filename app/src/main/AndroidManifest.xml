@@ -39,23 +39,27 @@
         android:largeHeap="true"
         android:exported="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Activity_Main"
-            android:launchMode="singleInstance"
-            >
+        <activity android:name=".activity.Activity_Group"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.Activity_Welcome"/>
-        <activity   android:name=".activity.Activity_Group"
-            android:launchMode="singleInstance"
-            >
+        <activity   android:name=".activity.Activity_Main"
+            android:launchMode="singleTask" >
         </activity>
-
         <activity android:name=".activity.Activity_Player"/>
         <service android:name=".service.PlayService"/>
+        <receiver android:name=".service.NotifiReceiver">
+            <intent-filter>
+                <action android:name="com.andlp.action" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
 
+        <service android:name="xiaofei.library.hermes.HermesService$HermesService0"/>
     </application>
 
 </manifest>

@@ -14,6 +14,8 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import xiaofei.library.hermeseventbus.HermesEventBus;
+
 /**
  * 717219917@qq.com  2017/9/22 11:06
  */
@@ -28,6 +30,7 @@ public class MyApp extends RePluginApplication {
         x.Ext.init(this);
         x.Ext.setDebug(true);
         registerActivityLifeCallback();
+        HermesEventBus.getDefault().init(this);
     }
 
     @Override

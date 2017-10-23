@@ -1,7 +1,6 @@
 package com.andlp.musicplayer.service;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -13,7 +12,6 @@ import android.graphics.Color;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
@@ -22,23 +20,27 @@ import android.widget.RemoteViews;
 import com.andlp.musicplayer.MyApp;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.activity.Activity_Group;
-import com.andlp.musicplayer.activity.Activity_Main;
-import com.andlp.musicplayer.activity.Activity_Welcome;
 import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.util.L;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.reflect.Method;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * 717219917@qq.com  2017/9/22 11:18
  */
 public class PlayService extends Service {
-    public static final String ACTION_CLOSE= "com.andlp.musicplayer.action.close";
-    public static final String ACTION_LEFT    = "com.andlp.musicplayer.action.left";
-    public static final String ACTION_PAUSE= "com.andlp.musicplayer.action.pause";
-    public static final String ACTION_RIGHT= "com.andlp.musicplayer.action.right";
-    public static final String ACTION_CI         = "com.andlp.musicplayer.action.ci";
-    public static final String ACTION_OPEN = "com.andlp.musicplayer.action.open";//进入主界面
+    public static final String ACTION="com.andlp.action";
+    public static final String ACTION_CLOSE= ACTION+".close";
+    public static final String ACTION_LEFT    =ACTION+ ".left";
+    public static final String ACTION_PAUSE= ACTION+".pause";
+    public static final String ACTION_RIGHT= ACTION+".right";
+    public static final String ACTION_CI         = ACTION+".ci";
+    public static final String ACTION_OPEN = ACTION+".open";//进入主界面
     String tag = "PlayService",title,content;
     private int num = 0;
     public static final int TYPE_Media = 7;
@@ -46,13 +48,19 @@ public class PlayService extends Service {
     NotificationCompat.Builder builder;
     Notification notification;
     private boolean ci_press=false,play_press=true;
-    private MyBinder myBinder = new MyBinder(); //创建MyBinder实例  返回用
     @Override public IBinder onBind(Intent intent) {
         return null;
     }
 
+    @Override public void onCreate() {
+        super.onCreate();
+        Log.d(tag, "进入playservice--onCreate()");
+        HermesEventBus.getDefault().register(this);
+        HermesEventBus.getDefault().post("我是service发的");
+    }
+
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(tag, "onStartCommand()");
+        Log.d(tag, "进入playservice--onStartCommand()");
         registerBroadcastReceiver();
         notifi_my("弹剑记.落魄江湖十五载","于魁智","于魁智-弹剑记.落魄江湖十五载");
         return super.onStartCommand(intent, flags, startId);
@@ -61,7 +69,13 @@ public class PlayService extends Service {
 
 
 
-    private void notifi_my(String title_temp,String content_temp,String ticker){//自定义通知
+    @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
+    public void rec_activity(String rec) {
+        L.e(tag+"接收到消息event---->" + rec);
+    }
+
+
+    private void notifi_my(String title_temp, String content_temp, String ticker){//自定义通知
          title=title_temp;content=content_temp;
         builder = new NotificationCompat.Builder(this);
         builder.setOngoing(true);
@@ -72,7 +86,7 @@ public class PlayService extends Service {
         notify_big();   //初始化大通知栏
 
           notification = builder.build();
-        startForeground(Constant.SERVICE_ID, notification);// 服务 id,取消时用
+        startForeground(Constant.PLAYSERVICE_ID, notification);// 服务 id,取消时用
 
     }
 
@@ -161,7 +175,7 @@ public class PlayService extends Service {
                 .setContentText("这是内容")
                 .setSmallIcon(R.mipmap.img_notification)
                 .build();
-        startForeground(Constant.SERVICE_ID, notification);// 开始前台服务 id作为标记  取消时用
+        startForeground(Constant.PLAYSERVICE_ID, notification);// 开始前台服务 id作为标记  取消时用
     }
 
   //自发自收 模拟通知栏按钮事件的过滤器
@@ -206,7 +220,7 @@ public class PlayService extends Service {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
 ////        NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-////        noti_manager.cancel(Constant.SERVICE_ID);
+////        noti_manager.cancel(Constant.PLAYSERVICE_ID);
     }
      private void left(){
 
@@ -229,7 +243,7 @@ public class PlayService extends Service {
          play_press=!play_press;
          builder.setContent(remoteViews);//通知栏小布局
          notification = builder.build();
-         startForeground(Constant.SERVICE_ID, notification);//更新通知栏ui
+         startForeground(Constant.PLAYSERVICE_ID, notification);//更新通知栏ui
      }
      private void right(){
 
@@ -242,7 +256,7 @@ public class PlayService extends Service {
          }
          ci_press=!ci_press;
          notification = builder.build();
-         startForeground(Constant.SERVICE_ID, notification);
+         startForeground(Constant.PLAYSERVICE_ID, notification);
      }
 
      private void open(){
@@ -280,6 +294,7 @@ public class PlayService extends Service {
         @Override public void onDestroy() {
         super.onDestroy();
         L.i(tag, "onDestroy()");
+      HermesEventBus.getDefault().destroy();
    try{if (receiver != null) { unregisterReceiver(receiver);  }}catch (Throwable t){t.printStackTrace();}
        stopForeground(true);// 停止前台服务--参数：表示是否移除之前的通知
 
