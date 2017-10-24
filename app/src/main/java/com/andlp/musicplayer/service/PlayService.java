@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -76,6 +77,7 @@ public class PlayService extends Service {
 
 
     private void notifi_my(String title_temp, String content_temp, String ticker){//自定义通知
+        L.e(tag+"进入norifi_my---->" + title_temp+",content_temp:"+content_temp+",ticker:"+ticker);
          title=title_temp;content=content_temp;
         builder = new NotificationCompat.Builder(this);
         builder.setOngoing(true);
@@ -83,7 +85,7 @@ public class PlayService extends Service {
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
         builder.setShowWhen(false);
         notify_small();//初始化小通知栏
-        notify_big();   //初始化大通知栏
+       // notify_big();   //初始化大通知栏
 
           notification = builder.build();
         startForeground(Constant.PLAYSERVICE_ID, notification);// 服务 id,取消时用
@@ -115,7 +117,13 @@ public class PlayService extends Service {
         PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this, 4, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.notifi_close, pendingIntent1);                  //又一个监听
 
-        Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
+
+        final Intent intent_open = new Intent();
+        intent_open.setAction("com.andlp.musicplayer.activity.Activity_Group");
+       // intent_open.setComponent(new ComponentName("com.andlp.musicplayer","com.andlp.musicplayer.activity.Activity_Group"));
+        intent_open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      //  Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
         PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.icon_iv, pendingIntent_open);           //又一个监听
 

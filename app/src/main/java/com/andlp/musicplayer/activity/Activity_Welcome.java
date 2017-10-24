@@ -1,5 +1,6 @@
 package com.andlp.musicplayer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -27,6 +28,9 @@ public class Activity_Welcome extends Activity_Base{
     @Event(value = R.id.welcome,type = View.OnClickListener.class)
     private void button(View view){
         EventBus.getDefault().post("finish_welcome");
+         Intent intent = new Intent(this,Activity_Group.class);
+        startActivity(intent);
+        finish();
     }
 
 }

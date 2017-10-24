@@ -34,7 +34,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  * 717219917@qq.com  2017/9/27 14:56
  */
 @ContentView(R.layout.activity_group)
-public class Activity_Group extends ActivityGroup{
+public class Activity_Group extends Activity_Base{
     @ViewInject(R.id.cc) LinearLayout content ;
     @ViewInject(R.id.bottom) Button bottom ;
 
