@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin:'me.tatarka.retrolambda'   //lambda表达式兼容 APT注解框架
 
 android {
     compileSdkVersion 25
@@ -24,6 +24,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 apply plugin: 'replugin-host-gradle'

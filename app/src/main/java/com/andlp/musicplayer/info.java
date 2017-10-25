@@ -1,5 +1,8 @@
 package com.andlp.musicplayer;
 
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 /**
  * Created by Administrator on 2017/10/23.
  */
@@ -11,7 +14,43 @@ public class info {
 // 不管ui是否销毁
  //2.2   点击logo唤起activity ,未注销  直接拉起.已注销 重新打开
 
+public void test(){
 
+    // 1.1使用匿名内部类
+    new Thread(new Runnable() {
+        @Override public void run() {
+            System.out.println("Hello world !");
+        }
+    }).start();
+
+    // 1.2使用 lambda expression
+    new Thread(() -> System.out.println("Hello world !")).start();
+
+   // 2.1使用匿名内部类
+    Runnable race1 = new Runnable() {
+        @Override public void run() {
+            System.out.println("Hello world !");
+            System.out.println("Hello world !");
+        }
+    };
+
+       x.task().post(() -> {
+           try {
+               RequestParams requestParams = new RequestParams();
+               String str= x.http().getSync(requestParams, String.class);
+           }catch (Throwable t){t.printStackTrace();}
+           });
+
+// 2.2使用 lambda expression
+    Runnable race2 = () -> {
+        System.out.println("Hello world !");
+        System.out.println("Hello world 2!");
+    };
+
+// 直接调用 run 方法(没开新线程哦!)
+    race1.run();
+    race2.run();
+}
 
 
 

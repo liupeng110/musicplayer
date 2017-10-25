@@ -21,6 +21,7 @@ import android.widget.RemoteViews;
 import com.andlp.musicplayer.MyApp;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.activity.Activity_Group;
+import com.andlp.musicplayer.activity.Activity_Welcome;
 import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.util.L;
 
@@ -118,13 +119,20 @@ public class PlayService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.notifi_close, pendingIntent1);                  //又一个监听
 
 
-        final Intent intent_open = new Intent();
-        intent_open.setAction("com.andlp.musicplayer.activity.Activity_Group");
-       // intent_open.setComponent(new ComponentName("com.andlp.musicplayer","com.andlp.musicplayer.activity.Activity_Group"));
-        intent_open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        final Intent intent_open = new Intent();
+//        intent_open.setAction("com.andlp.musicplayer.activity.Activity_Group");
+//       // intent_open.setComponent(new ComponentName("com.andlp.musicplayer","com.andlp.musicplayer.activity.Activity_Group"));
+//        intent_open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+
+        Intent intent_Main = new Intent(Intent.ACTION_MAIN);
+        intent_Main.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent_Main.setClass(this, Activity_Group.class);
+        intent_Main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
       //  Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
-        PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent_open = PendingIntent.getActivity(this, 4, intent_Main, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//        PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.icon_iv, pendingIntent_open);           //又一个监听
 
 
