@@ -143,12 +143,12 @@ public class Activity_Main extends Activity_Base {
 
 
     private void addFragment(){
-        Fragment_Local fragment_local = new Fragment_Local();
-        FragmentTransaction tx =  getFragmentManager().beginTransaction();
-        tx.add(R.id.content,fragment_local);//将当前的事务添加到了回退栈
-        tx.addToBackStack(null);
-        tx.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);//自定义动画效果
-        tx.commit();//tx.commitAllowingStateLoss();
+//        Fragment_Local fragment_local =   Fragment_Local.newInstance();
+//        FragmentTransaction tx =  getFragmentManager().beginTransaction();
+//        tx.add(R.id.content, fragment_local);//将当前的事务添加到了回退栈
+//        tx.addToBackStack(null);
+//        tx.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);//自定义动画效果
+//        tx.commit();//tx.commitAllowingStateLoss();
     }
 
     private void addFrameLayout(){

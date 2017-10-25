@@ -1,9 +1,9 @@
 package com.andlp.musicplayer.activity;
 
-import android.app.ActivityGroup;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.config.Constant;
+import com.andlp.musicplayer.fragment.Fragment_Local;
+import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.service.PlayService;
 import com.andlp.musicplayer.util.DateUtil;
 import com.andlp.musicplayer.util.PackageUtil;
@@ -27,6 +29,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import me.yokeyword.fragmentation.SupportActivity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
@@ -34,7 +37,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  * 717219917@qq.com  2017/9/27 14:56
  */
 @ContentView(R.layout.activity_group)
-public class Activity_Group extends Activity_Base{
+public class Activity_Group extends SupportActivity {
     @ViewInject(R.id.cc) LinearLayout content ;
     @ViewInject(R.id.bottom) Button bottom ;
 
@@ -44,14 +47,26 @@ public class Activity_Group extends Activity_Base{
     TTMediaPlayer player;
 //    private PlayService.MyBinder mbinder;//service中返回
 
+    Fragment_Local  firstFragment;
+    Fragment_New fragment_new;
+
+
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);//没用base,单独注入
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
 
+            if (savedInstanceState == null) {
+                  firstFragment = Fragment_Local.newInstance();
+            loadFragment(firstFragment);
+        }
+
         if (!isTaskRoot()) {//判断是否最底层
              L.i("最底层");
        }
+
+
     }
 
     @Override public boolean onKeyDown( int keyCode, KeyEvent event) {
@@ -83,9 +98,15 @@ public class Activity_Group extends Activity_Base{
 
 //           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
 //           mediaPlay();
-        startService();
+//        startService();
+
+//        fragment_new = Fragment_New.newInstance();
+        addFragment(firstFragment ,Fragment_New.newInstance());
 
     }
+
+
+
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -99,23 +120,22 @@ public class Activity_Group extends Activity_Base{
 
        }
     }
-
-
     private void startService(){//启动服务  先判定是否已开启
         if (!PackageUtil.isServiceWork(this,"com.andlp.musicplayer.service.PlayService")){
             Intent  intent = new Intent();
             intent.setClass(Activity_Group.this, PlayService.class);
             startService(intent);
+
+            Intent intent_main = new Intent(this,Activity_Main.class);
+            startActivity(intent_main);
+
         }
 
     }
-
-
     private void clearNotifi(){   //清空
          NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         noti_manager.cancel(Constant.PLAYSERVICE_ID);
     }
-
     private void mediaPlay(){
         player = TTMediaPlayer.instance(SingnatureUtil.mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
         player.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
@@ -168,16 +188,34 @@ public class Activity_Group extends Activity_Base{
     }
 
 
-
-    @Override public void onBackPressed() {
-        L.i("group---back");
-        if (myview==null){
-            super.onBackPressed();
-        }else {
-            content.removeView(myview);
-            myview = null;
-        }
+    public void  addFragment(Fragment fromFragment, Fragment toFragment){
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.h_fragment_enter, R.anim.h_fragment_exit, R.anim.h_fragment_pop_enter, R.anim.h_fragment_pop_exit)
+                .add(R.id.cc, toFragment, toFragment.getClass().getSimpleName())
+                .hide(fromFragment)
+                .addToBackStack(toFragment.getClass().getSimpleName())
+                .commit();
     }
+
+    public void loadFragment(Fragment toFragment){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.cc, toFragment, toFragment.getClass().getSimpleName())
+                .addToBackStack(toFragment.getClass().getSimpleName())
+                .commit();
+    }
+
+
+
+
+//    @Override public void onBackPressed() {
+//        L.i("group---back");
+//        if (myview==null){
+//            super.onBackPressed();
+//        }else {
+//            content.removeView(myview);
+//            myview = null;
+//        }
+//    }
 
 
 

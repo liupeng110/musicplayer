@@ -102,38 +102,30 @@ public class PlayService extends Service {
 
         Intent intent_left = new Intent(ACTION_LEFT);//监听 上一曲
         PendingIntent pendingIntent_left = PendingIntent.getBroadcast(this, 1, intent_left, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notifi_left, pendingIntent_left);                  //一个监听
+        remoteViews.setOnClickPendingIntent(R.id.notifi_left, pendingIntent_left);
 
 
         Intent intent_pause = new Intent(ACTION_PAUSE);//监听 暂停
         PendingIntent pendingIntent_pause = PendingIntent.getBroadcast(this, 2, intent_pause, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notifi_pause, pendingIntent_pause);      //一个监听
+        remoteViews.setOnClickPendingIntent(R.id.notifi_pause, pendingIntent_pause);
 
         Intent intent_right = new Intent(ACTION_RIGHT);//监听 下一曲
         PendingIntent pendingIntent_right = PendingIntent.getBroadcast(this, 3, intent_right, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notifi_right, pendingIntent_right);           //一个监听
+        remoteViews.setOnClickPendingIntent(R.id.notifi_right, pendingIntent_right);
 
 
         Intent intent1 = new Intent(ACTION_CLOSE);//监听关闭
         PendingIntent pendingIntent1 = PendingIntent.getBroadcast(this, 4, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notifi_close, pendingIntent1);                  //又一个监听
+        remoteViews.setOnClickPendingIntent(R.id.notifi_close, pendingIntent1);
 
 
-//        final Intent intent_open = new Intent();
-//        intent_open.setAction("com.andlp.musicplayer.activity.Activity_Group");
-//       // intent_open.setComponent(new ComponentName("com.andlp.musicplayer","com.andlp.musicplayer.activity.Activity_Group"));
-//        intent_open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-        Intent intent_Main = new Intent(Intent.ACTION_MAIN);
+        Intent intent_Main = new Intent(Intent.ACTION_MAIN);//监听logo事件
         intent_Main.addCategory(Intent.CATEGORY_LAUNCHER);
         intent_Main.setClass(this, Activity_Group.class);
         intent_Main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-      //  Intent intent_open = new Intent(ACTION_OPEN);//监听关闭
         PendingIntent pendingIntent_open = PendingIntent.getActivity(this, 4, intent_Main, PendingIntent.FLAG_UPDATE_CURRENT);
-
-//        PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.icon_iv, pendingIntent_open);           //又一个监听
+//    PendingIntent pendingIntent_open = PendingIntent.getBroadcast(this, 4, intent_open, PendingIntent.FLAG_UPDATE_CURRENT);//
+        remoteViews.setOnClickPendingIntent(R.id.icon_iv, pendingIntent_open);
 
 
         builder.setSmallIcon(R.mipmap.img_notification);

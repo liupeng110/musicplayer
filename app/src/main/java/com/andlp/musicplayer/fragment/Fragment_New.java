@@ -16,12 +16,14 @@ import me.yokeyword.fragmentation.SupportFragment;
 /**
  * 717219917@qq.com  2017/9/25 15:10
  */
-@ContentView(R.layout.fragment_local)
-public class Fragment_Local extends SupportFragment {
+@ContentView(R.layout.fragment_new)
+public class Fragment_New extends SupportFragment {
+
     private Toolbar mToolbar;
-    public static Fragment_Local newInstance() {
+
+    public static Fragment_New newInstance() {
         Bundle args = new Bundle();
-        Fragment_Local fragment = new Fragment_Local();
+        Fragment_New fragment = new Fragment_New();
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,5 +43,4 @@ public class Fragment_Local extends SupportFragment {
             x.view().inject(this, this.getView());
         }
     }
-
 }
