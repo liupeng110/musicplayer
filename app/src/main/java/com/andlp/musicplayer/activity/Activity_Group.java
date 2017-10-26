@@ -77,7 +77,7 @@ public class Activity_Group extends SwipeBackActivity {
         if (!isTaskRoot()) {//判断是否最底层
              L.i("最底层");
        }
-
+//        startService();
 
     }
 
@@ -120,6 +120,7 @@ public class Activity_Group extends SwipeBackActivity {
 
 public void btn(View view){
     start(Fragment_New.newInstance());
+     startService();
 }
 
 
@@ -141,8 +142,8 @@ public void btn(View view){
             intent.setClass(Activity_Group.this, PlayService.class);
             startService(intent);
 
-            Intent intent_main = new Intent(this,Activity_Main.class);
-            startActivity(intent_main);
+//            Intent intent_main = new Intent(this,Activity_Main.class);
+//            startActivity(intent_main);
 
         }
 
