@@ -30,19 +30,23 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.SwipeBackLayout;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
 /**
  * 717219917@qq.com  2017/9/27 14:56
  */
-@ContentView(R.layout.activity_group)
-public class Activity_Group extends SupportActivity {
-    @ViewInject(R.id.cc) LinearLayout content ;
-    @ViewInject(R.id.bottom) Button bottom ;
+//@ContentView(R.layout.activity_group)
+public class Activity_Group extends SwipeBackActivity {
+//    @ViewInject(R.id.cc) LinearLayout content ;
+//    @ViewInject(R.id.bottom) Button bottom ;
 
-    @ViewInject(R.id.group_zuo) Button zuo ;
-    @ViewInject(R.id.group_you) Button you ;
+//    @ViewInject(R.id.group_zuo) Button zuo ;
+//    @ViewInject(R.id.group_you) Button you ;
     View myview;
     TTMediaPlayer player;
 //    private PlayService.MyBinder mbinder;//service中返回
@@ -53,14 +57,22 @@ public class Activity_Group extends SupportActivity {
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
-        x.view().inject(this);//没用base,单独注入
+//        x.view().inject(this);//没用base,单独注入
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
+          setContentView(R.layout.activity_group);//
 
-            if (savedInstanceState == null) {
-                  firstFragment = Fragment_Local.newInstance();
-            loadFragment(firstFragment);
+        getSwipeBackLayout().setParallaxOffset(0.0f); // （类iOS）滑动退出视觉差，默认0.3
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
+
+        if (findFragment(Fragment_Local.class) == null) {
+            loadRootFragment(R.id.cc, Fragment_Local.newInstance());  // 加载根Fragment
         }
+
+//            if (savedInstanceState == null) {
+//                  firstFragment = Fragment_Local.newInstance();
+//            loadFragment(firstFragment);
+//        }
 
         if (!isTaskRoot()) {//判断是否最底层
              L.i("最底层");
@@ -69,43 +81,46 @@ public class Activity_Group extends SupportActivity {
 
     }
 
-    @Override public boolean onKeyDown( int keyCode, KeyEvent event) {
-        L.i("进入onKeyDown");
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override public boolean onKeyDown( int keyCode, KeyEvent event) {
+//        L.i("进入onKeyDown");
+//        return super.onKeyDown(keyCode, event);
+//    }
 
-    @Event(value = R.id.group_zuo,type = View.OnClickListener.class)
-    private void zuo(View view) {
-        player.setPosition(player.getPosition()-4500,0);
-    }
+//    @Event(value = R.id.group_zuo,type = View.OnClickListener.class)
+//    private void zuo(View view) {
+//        player.setPosition(player.getPosition()-4500,0);
+//    }
+//
+//    @Event(value = R.id.group_you,type = View.OnClickListener.class)
+//    private void yuo(View view) {
+//        player.setPosition(player.getPosition()+4500,0);
+//    }
 
-    @Event(value = R.id.group_you,type = View.OnClickListener.class)
-    private void yuo(View view) {
-        player.setPosition(player.getPosition()+4500,0);
-    }
+//    @Event(value = R.id.bottom,type = View.OnClickListener.class)//底部按钮事件监听
+//    private void bottom(View view){
+//        bottom.setText("onClick");
+////        content.removeAllViews();//打开子activity
+////        myview=getLocalActivityManager().startActivity(
+////                "Module1",
+////                new Intent(Activity_Group.this,Activity_Player.class)//FLAG_ACTIVITY_CLEAR_TOP
+////                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ))//FLAG_ACTIVITY_BROUGHT_TO_FRONT
+////                .getDecorView();
+////        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+////        content.addView(myview);
+//
+////           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
+////           mediaPlay();
+////        startService();
+//
+////        fragment_new = Fragment_New.newInstance();
+////        addFragment(firstFragment ,Fragment_New.newInstance());
+//             start(Fragment_New.newInstance());
+//
+//    }
 
-    @Event(value = R.id.bottom,type = View.OnClickListener.class)//底部按钮事件监听
-    private void bottom(View view){
-        bottom.setText("onClick");
-//        content.removeAllViews();//打开子activity
-//        myview=getLocalActivityManager().startActivity(
-//                "Module1",
-//                new Intent(Activity_Group.this,Activity_Player.class)//FLAG_ACTIVITY_CLEAR_TOP
-//                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ))//FLAG_ACTIVITY_BROUGHT_TO_FRONT
-//                .getDecorView();
-//        myview.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-//        content.addView(myview);
-
-//           mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
-//           mediaPlay();
-//        startService();
-
-//        fragment_new = Fragment_New.newInstance();
-        addFragment(firstFragment ,Fragment_New.newInstance());
-
-    }
-
-
+public void btn(View view){
+    start(Fragment_New.newInstance());
+}
 
 
 
@@ -115,7 +130,7 @@ public class Activity_Group extends SupportActivity {
        if(str.startsWith("finish")){
            str=str.substring(7,str.length());
            switch (str){
-               case "welcome":content.removeView(myview);myview=null;
+//               case "welcome":content.removeView(myview);myview=null;
            }
 
        }
@@ -217,7 +232,18 @@ public class Activity_Group extends SupportActivity {
 //        }
 //    }
 
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        // 设置横向(和安卓4.x动画相同)
+        return new DefaultHorizontalAnimator();
+    }
 
+    @Override
+    public boolean swipeBackPriority() {
+//        return super.swipeBackPriority();
+        // 下面是默认实现:
+         return getSupportFragmentManager().getBackStackEntryCount() <= 1;
+    }
 
     @Override protected void onDestroy() {
         super.onDestroy();

@@ -11,13 +11,14 @@ import com.andlp.musicplayer.R;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.x;
 
-import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation.SwipeBackLayout;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * 717219917@qq.com  2017/9/25 15:10
  */
 @ContentView(R.layout.fragment_new)
-public class Fragment_New extends SupportFragment {
+public class Fragment_New extends SwipeBackFragment {
 
     private Toolbar mToolbar;
 
@@ -33,7 +34,7 @@ public class Fragment_New extends SupportFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         injected = true;
-        return x.view().inject(this, inflater, container);
+        return  attachToSwipeBack(x.view().inject(this, inflater, container)) ;
     }
 
     @Override
@@ -42,5 +43,8 @@ public class Fragment_New extends SupportFragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
+        getSwipeBackLayout().setShadow(R.drawable.kong,SwipeBackLayout.EDGE_LEFT);
+        getSwipeBackLayout().setParallaxOffset(0.0f );//阴影距离
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
     }
 }

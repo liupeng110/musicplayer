@@ -37,7 +37,14 @@ public class MyApp extends RePluginApplication {
         x.Ext.setDebug(true);
         registerActivityLifeCallback();
         HermesEventBus.getDefault().init(this);
-        Fragmentation.builder() .debug(BuildConfig.DEBUG) .install();//滑动框架初始化
+        Fragmentation.builder()
+                // 显示悬浮球 ; 其他Mode:SHAKE: 摇一摇唤出   NONE：隐藏
+                .stackViewMode(Fragmentation.BUBBLE)
+                .debug(BuildConfig.DEBUG)
+             //... // 更多查看wiki或demo
+             .install();
+
+//        Fragmentation.builder() .debug(BuildConfig.DEBUG) .install();//滑动框架初始化
     }
 
 
