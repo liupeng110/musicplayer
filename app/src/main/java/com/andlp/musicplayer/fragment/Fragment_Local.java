@@ -41,7 +41,7 @@ public class Fragment_Local extends SwipeBackFragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
-        getSwipeBackLayout().setShadow(R.drawable.kong,SwipeBackLayout.EDGE_LEFT);
+        getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_ALL);
         getSwipeBackLayout().setParallaxOffset(0.0f );
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
     }
