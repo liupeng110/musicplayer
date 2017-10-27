@@ -4,14 +4,12 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.config.Constant;
+import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.fragment.Fragment_Local;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.service.PlayService;
@@ -24,14 +22,8 @@ import com.sds.android.ttpod.media.player.TTMediaPlayer;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SwipeBackLayout;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
@@ -236,7 +228,7 @@ public void btn(View view){
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
-        return new DefaultHorizontalAnimator();
+        return new Anim_Fragment();
     }
 
     @Override

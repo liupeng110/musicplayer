@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.config.Anim_Fragment;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.x;
 
 import me.yokeyword.fragmentation.SwipeBackLayout;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
@@ -41,9 +43,17 @@ public class Fragment_Local extends SwipeBackFragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
+        getSwipeBackLayout().clearAnimation();//
         getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_ALL);
         getSwipeBackLayout().setParallaxOffset(0.0f );
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
     }
+
+        @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        // 设置横向(和安卓4.x动画相同)
+        return new Anim_Fragment();
+    }
+
 
 }
