@@ -55,7 +55,7 @@
             android:id="@+id/notifi_ci_big"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:src="@mipmap/notifi_ci"
+            android:src="@mipmap/notifi_close"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
