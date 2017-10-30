@@ -200,21 +200,21 @@ public class PlayService extends Service {
         filter.addAction(ACTION_OPEN);
        registerReceiver(receiver, filter);
     }
+
    //他处调用也发广播  兼容通知栏
     public class PlayBroadcastReceiver extends BroadcastReceiver {
         @Override  public void onReceive(Context context, Intent intent) {
             L.i(tag,"收到广播:"+ intent.getAction());
             if (intent.getAction()==null){return;}
             switch ( intent.getAction()){
-                case ACTION_CLOSE:   close(); break;
+                case ACTION_CLOSE:   close();   break;
                 case ACTION_LEFT:       left();     break;
-                case ACTION_PAUSE:   pause();break;
-                case ACTION_RIGHT:   right();break;
-                case ACTION_CI:            ci();break;
+                case ACTION_PAUSE:   pause(); break;
+                case ACTION_RIGHT:   right();    break;
+                case ACTION_CI:            ci();      break;
                 case ACTION_OPEN :   open();break;
             }
         }
-
 
     }
 

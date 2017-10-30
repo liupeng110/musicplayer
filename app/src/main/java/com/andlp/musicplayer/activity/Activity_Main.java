@@ -1,6 +1,5 @@
 package com.andlp.musicplayer.activity;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.fragment.Fragment_Local;
 import com.andlp.musicplayer.util.L;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qihoo360.replugin.RePlugin;
@@ -143,7 +141,7 @@ public class Activity_Main extends Activity_Base {
 
 
     private void addFragment(){
-//        Fragment_Local fragment_local =   Fragment_Local.newInstance();
+//        Fragment_Main fragment_local =   Fragment_Main.newInstance();
 //        FragmentTransaction tx =  getFragmentManager().beginTransaction();
 //        tx.add(R.id.content, fragment_local);//将当前的事务添加到了回退栈
 //        tx.addToBackStack(null);

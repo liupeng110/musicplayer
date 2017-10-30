@@ -13,7 +13,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * 717219917@qq.com  2017/9/22 15:26
  */
 
-public class Fragment_Base extends SupportFragment {
+public abstract  class Fragment_Base extends SupportFragment {
 
     private boolean injected = false;
 

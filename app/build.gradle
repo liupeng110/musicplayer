@@ -41,7 +41,7 @@ repluginHostConfig {
 
 repositories {
    maven { url "http://jzaccone.github.io/SlidingMenu-aar" }//
-    maven{ url "https://dl.bintray.com/liupeng110/maven"  }
+   // maven{ url "https://dl.bintray.com/liupeng110/maven"  }
 }
 
 
@@ -68,7 +68,6 @@ dependencies {
     compile 'me.yokeyword:fragmentation:1.1.7'//滑动处理事件
 // swipeback基于fragmentation, 如果是自定制SupportActivity/Fragment，则参照SwipeBackActivity/Fragment实现即可
     compile 'me.yokeyword:fragmentation-swipeback:1.1.7'
-
 
 
 //    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.3'

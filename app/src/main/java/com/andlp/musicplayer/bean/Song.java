@@ -1,5 +1,5 @@
 package com.andlp.musicplayer.bean;
- 
+
 public class Song {
 
     private String  path;

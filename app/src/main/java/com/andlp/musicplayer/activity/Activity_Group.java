@@ -10,7 +10,7 @@ import android.view.View;
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.config.Anim_Fragment;
-import com.andlp.musicplayer.fragment.Fragment_Local;
+import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.service.PlayService;
 import com.andlp.musicplayer.util.DateUtil;
@@ -43,7 +43,7 @@ public class Activity_Group extends SwipeBackActivity {
     TTMediaPlayer player;
 //    private PlayService.MyBinder mbinder;//service中返回
 
-    Fragment_Local  firstFragment;
+    Fragment_Main firstFragment;
     Fragment_New fragment_new;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,12 @@ public class Activity_Group extends SwipeBackActivity {
         getSwipeBackLayout().setParallaxOffset(0.0f); //  滑动退出视觉差，默认0.3
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
         getSwipeBackLayout().setEdgeLevel(100);      //宽度
-        if (findFragment(Fragment_Local.class) == null) {
-            loadRootFragment(R.id.cc, Fragment_Local.newInstance());  // 加载根Fragment
+        if (findFragment(Fragment_Main.class) == null) {
+            loadRootFragment(R.id.cc, Fragment_Main.newInstance());  // 加载根Fragment
         }
 
 //            if (savedInstanceState == null) {
-//                  firstFragment = Fragment_Local.newInstance();
+//                  firstFragment = Fragment_Main.newInstance();
 //            loadFragment(firstFragment);
 //        }
 
