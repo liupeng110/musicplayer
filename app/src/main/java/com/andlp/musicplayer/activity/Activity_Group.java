@@ -46,17 +46,15 @@ public class Activity_Group extends SwipeBackActivity {
     Fragment_Local  firstFragment;
     Fragment_New fragment_new;
 
-
-
     @Override protected void onCreate(Bundle savedInstanceState) {
 //        x.view().inject(this);//没用base,单独注入
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
           setContentView(R.layout.activity_group);//
 
-        getSwipeBackLayout().setParallaxOffset(0.0f); // （类iOS）滑动退出视觉差，默认0.3
+        getSwipeBackLayout().setParallaxOffset(0.0f); //  滑动退出视觉差，默认0.3
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
-
+        getSwipeBackLayout().setEdgeLevel(100);      //宽度
         if (findFragment(Fragment_Local.class) == null) {
             loadRootFragment(R.id.cc, Fragment_Local.newInstance());  // 加载根Fragment
         }

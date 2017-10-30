@@ -17,11 +17,11 @@ public class NotifiReceiver extends BroadcastReceiver {//WakefulBroadcastReceive
         final String action = intent.getAction();
         L.i("收到广播："+action);
 
-        Intent intent_Main = new Intent(Intent.ACTION_MAIN);
-        intent_Main.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent_Main.setClass(context, Activity_Welcome.class);
-        intent_Main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-       context.startActivity(intent_Main);
+//        Intent intent_Main = new Intent(Intent.ACTION_MAIN);
+//        intent_Main.addCategory(Intent.CATEGORY_LAUNCHER);
+//        intent_Main.setClass(context, Activity_Welcome.class);
+//        intent_Main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//       context.startActivity(intent_Main);
 
 ////        if (action.equals("com.andlp.musicplayer.activity.Activity_Group")){
 //            Intent activityIntent = new Intent(context.getApplicationContext(), Activity_Group.class);

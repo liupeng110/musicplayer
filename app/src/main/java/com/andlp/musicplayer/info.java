@@ -13,6 +13,11 @@ public class info {
 //2.1    点击通知栏 按钮  发出广播  NotifiReceiver接收后  分发给service处理 播放暂停等逻辑  并发消息更新ui中信息
 // 不管ui是否销毁
  //2.2   点击logo唤起activity ,未注销  直接拉起.已注销 重新打开
+ //bottom滑动布局 暂时先不做  与播放器皮肤耦合度大
+    //我的最爱 --> 我的歌单下面
+
+
+
 
 public void test(){
 
@@ -36,7 +41,7 @@ public void test(){
 
        x.task().post(() -> {
            try {
-               RequestParams requestParams = new RequestParams();
+               RequestParams requestParams = new RequestParams("https://www.baidu.com/");
                String str= x.http().getSync(requestParams, String.class);
            }catch (Throwable t){t.printStackTrace();}
            });

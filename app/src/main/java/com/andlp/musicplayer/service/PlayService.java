@@ -1,5 +1,6 @@
 package com.andlp.musicplayer.service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -203,6 +204,7 @@ public class PlayService extends Service {
     public class PlayBroadcastReceiver extends BroadcastReceiver {
         @Override  public void onReceive(Context context, Intent intent) {
             L.i(tag,"收到广播:"+ intent.getAction());
+            if (intent.getAction()==null){return;}
             switch ( intent.getAction()){
                 case ACTION_CLOSE:   close(); break;
                 case ACTION_LEFT:       left();     break;
@@ -217,7 +219,7 @@ public class PlayService extends Service {
     }
 
     private void close() {
-
+        L.i("service 进入close");
         if (receiver != null) {
              unregisterReceiver(receiver);
         }
@@ -227,18 +229,23 @@ public class PlayService extends Service {
         MyApp.exit();
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
-////        NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-////        noti_manager.cancel(Constant.PLAYSERVICE_ID);
+////  NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+////  noti_manager.cancel(Constant.PLAYSERVICE_ID);
     }
      private void left(){
-
+         L.i("service 进入left");
      }
+     @SuppressLint("RestrictedApi")
      private void pause(){
-         if (play_press) {
-            try{ builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_play);}catch (Throwable t){t.printStackTrace();}
-         }else {
-             try{builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_pause);}catch (Throwable t){t.printStackTrace();}
+         L.i("pause中builder是否为null--:"+builder.getBigContentView());
+         if (builder.getBigContentView()!=null){
+             if (play_press) {
+                 try{ builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_play);}catch (Throwable t){t.printStackTrace();}
+             }else {
+                 try{builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_pause);}catch (Throwable t){t.printStackTrace();}
+             }
          }
+
          RemoteViews remoteViews =notify_small(); //重新new因为从builder获取为空
          if (play_press) {
              remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_play);
@@ -246,49 +253,53 @@ public class PlayService extends Service {
              remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_pause);
          }
          remoteViews.setViewVisibility(R.id.notice_view_type_0, View.VISIBLE);
-         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.INVISIBLE);
-         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.GONE);
+//         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.INVISIBLE);
+//         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.GONE);
          play_press=!play_press;
          builder.setContent(remoteViews);//通知栏小布局
          notification = builder.build();
          startForeground(Constant.PLAYSERVICE_ID, notification);//更新通知栏ui
      }
      private void right(){
-
+          L.i("service 进入right");
      }
+     @SuppressLint("RestrictedApi")
      private void ci(){  //需要持久化保存
-         if (ci_press){
-             try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci);}catch (Throwable t){t.printStackTrace();}
-         }else {
-           try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci_p);}catch (Throwable t){t.printStackTrace();}
+         if (builder.getBigContentView()!=null){
+             if (ci_press){
+                 try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci);}catch (Throwable t){t.printStackTrace();}
+             }else {
+                 try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci_p);}catch (Throwable t){t.printStackTrace();}
+             }
+             ci_press=!ci_press;
+             notification = builder.build();
+             startForeground(Constant.PLAYSERVICE_ID, notification);
          }
-         ci_press=!ci_press;
-         notification = builder.build();
-         startForeground(Constant.PLAYSERVICE_ID, notification);
+
      }
 
      private void open(){
-         Intent intent = new Intent(this, Activity_Group.class);
-       //  intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        // intent.setAction(Intent.ACTION_MAIN);
-         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        // Intent intent = new Intent(this, Activity_Group.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-         startActivity(intent);
-         try {
-             Object statusBarManager =  getSystemService("statusbar");
-             Method collapse;
-             if (Build.VERSION.SDK_INT <= 16) {
-                 collapse = statusBarManager.getClass().getMethod("collapse");
-             } else {
-                 collapse = statusBarManager.getClass().getMethod("collapsePanels");
-             }
-             collapse.invoke(statusBarManager);
-         } catch (Exception localException) {
-             localException.printStackTrace();
-         }
+//         Intent intent = new Intent(this, Activity_Group.class);
+//       //  intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        // intent.setAction(Intent.ACTION_MAIN);
+//         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//        // Intent intent = new Intent(this, Activity_Group.class);
+//        //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//         startActivity(intent);
+//         try {
+//             Object statusBarManager =  getSystemService("statusbar");
+//             Method collapse;
+//             if (Build.VERSION.SDK_INT <= 16) {
+//                 collapse = statusBarManager.getClass().getMethod("collapse");
+//             } else {
+//                 collapse = statusBarManager.getClass().getMethod("collapsePanels");
+//             }
+//             collapse.invoke(statusBarManager);
+//         } catch (Exception localException) {
+//             localException.printStackTrace();
+//         }
      }
 
 
