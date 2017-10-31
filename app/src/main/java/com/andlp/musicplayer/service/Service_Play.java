@@ -37,13 +37,13 @@ public class Service_Play extends Service {
 
     @Override public void onCreate() {
         super.onCreate();
-        L.d("进入playservice--onCreate()");
+        L.d("service进入onCreate()");
         HermesEventBus.getDefault().register(this);
-        HermesEventBus.getDefault().post("我是service发的");
+        HermesEventBus.getDefault().post("我是service发的-onCreate()");
     }
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
-        L.d("进入playservice--onStartCommand()");
+        L.d("service进入onStartCommand()");
         notifi_my("弹剑记.落魄江湖十五载","于魁智","于魁智-弹剑记.落魄江湖十五载");
         return super.onStartCommand(intent, flags, startId);
     }
@@ -169,8 +169,6 @@ public class Service_Play extends Service {
         MyApp.exit();
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
-////  NotificationManager noti_manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-////  noti_manager.cancel(Constant.PLAYSERVICE_ID);
     }
      private void left(){
          L.i("service 进入left");
@@ -229,7 +227,7 @@ public class Service_Play extends Service {
     }  //获取系统通知栏字体默认颜色
      @Override public void onDestroy() {
         super.onDestroy();
-        L.e( "销毁");
+        L.e( "service销毁");
       HermesEventBus.getDefault().destroy();
        stopForeground(true);// 停止前台服务--参数：表示是否移除之前的通知
     }
