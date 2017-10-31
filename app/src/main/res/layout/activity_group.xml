@@ -2,7 +2,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#00000000">
+
 
     <FrameLayout
         android:id="@+id/cc"
@@ -53,17 +54,10 @@
         android:textSize="60dp" />
 
 
-    <Button
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom"
-        android:text="bottom"
-        android:onClick="btn"
-        />
 
 
-    <!--android:layout_alignParentBottom="true"-->
+
+   <include layout="@layout/activity_main__bottom"/>
 
 
 </merge>

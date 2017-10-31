@@ -5,7 +5,15 @@ package com.andlp.musicplayer.config;
  */
 
 public class Constant {
-     public static int PLAYSERVICE_ID =110;//playservice的id
+     public final static int service_ID =110;//playservice的id
+     public final static String left    = "com.andlp.action.left";
+     public final static String right  = "com.andlp.action.right";
+     public final static String play   = "com.andlp.action.play";
+     public final static String open = "com.andlp.action.open";
+     public final static String exit = "com.andlp.action.exit";
+     public final static String ci       = "com.andlp.action.ci";
+     public final static String other = "com.andlp.action.other";
+     public final static String EXIT = "com.andlp.action.other";
 
 
 }

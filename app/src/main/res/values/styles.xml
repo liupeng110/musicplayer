@@ -12,13 +12,13 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
 
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
 
         <!--导航栏上的标题颜色-->
         <item name="android:textColorPrimary">@android:color/black</item>
         <!-- 去掉水波纹效果-->
-        <item name="android:selectableItemBackgroundBorderless">@null</item>
+        <!--<item name="android:selectableItemBackgroundBorderless">@null</item>-->
 
         <!-- 透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -32,6 +32,22 @@
         <item name="android:activityOpenExitAnimation">@anim/fragment_exit</item>
         <item name="android:activityCloseEnterAnimation">@anim/fragment_enter</item>
         <item name="android:activityCloseExitAnimation">@anim/fragment_exit</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
+        <!--导航栏上的标题颜色-->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- 去掉水波纹效果-->
+        <item name="android:selectableItemBackgroundBorderless" tools:ignore="NewApi">@null</item>
+        <!-- 透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 

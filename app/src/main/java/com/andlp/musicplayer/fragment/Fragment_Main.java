@@ -34,7 +34,8 @@ public class Fragment_Main extends SwipeBackFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         injected = true;
-        return  attachToSwipeBack(x.view().inject(this, inflater, container)) ;
+//        return  attachToSwipeBack(x.view().inject(this, inflater, container)) ;
+        return  x.view().inject(this, inflater, container);
     }
 
     @Override
@@ -43,16 +44,17 @@ public class Fragment_Main extends SwipeBackFragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
-        getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_ALL);
-        getSwipeBackLayout().setParallaxOffset(0.0f );
-        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
+           getSwipeBackLayout().setEnableGesture(false);
+//        getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_ALL);
+//        getSwipeBackLayout().setParallaxOffset(0.0f );
+//        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
     }
 
-        @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        // 设置横向(和安卓4.x动画相同)
-        return new Anim_Fragment();
-    }
+//        @Override
+//    public FragmentAnimator onCreateFragmentAnimator() {
+//        // 设置横向(和安卓4.x动画相同)
+//        return new Anim_Fragment();
+//    }
 
 
 }

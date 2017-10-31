@@ -15,19 +15,29 @@
         android:supportsRtl="true"
         android:name=".MyApp"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Activity_Main"  >
+        <activity android:name=".activity.Activity_Welcome"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Activity_Welcome"/>
+        <activity android:name=".activity.Activity_Main"/>
         <activity android:name=".activity.Activity_Group"
             android:screenOrientation="portrait"
             />
         <activity android:name=".activity.Activity_Player"/>
-        <service android:name=".service.PlayService"/>
+        <service android:name=".service.Service_Play"/>
+         <receiver android:name=".service.Receiver_Notifi">
+             <intent-filter>
+                 <action android:name="com.andlp.action.play" />
+                 <action android:name="com.andlp.action.left" />
+                 <action android:name="com.andlp.action.right" />
+                 <action android:name="com.andlp.action.exit" />
+                 <action android:name="com.andlp.action.other" />
+                 <action android:name="com.andlp.action.open" />
+             </intent-filter>
+         </receiver>
 
     </application>
 

@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.List;
 
 public class PackageUtil {
-/**当前service是否已经运行   eg:com.andlp.service.PlayService*/
+/**当前service是否已经运行   eg:com.andlp.service.Service_Play*/
     public static boolean isServiceWork(Context mContext, String serviceName) {
         boolean isWork = false;
         ActivityManager myAM = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
