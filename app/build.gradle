@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin:'me.tatarka.retrolambda'   //lambda表达式兼容 APT注解框架
+apply plugin:'me.tatarka.retrolambda'   //lambda表达式兼容 APT注解框架
 
 android {
     compileSdkVersion 25
@@ -24,18 +24,16 @@ android {
         }
     }
 
-    //compileOptions {
-    //    sourceCompatibility JavaVersion.VERSION_1_8
-     //   targetCompatibility JavaVersion.VERSION_1_8
-   // }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 apply plugin: 'replugin-host-gradle'
 repluginHostConfig {
     useAppCompat = true
-
-    // 可以在这里自定义常驻进程的名字
-    // persistentName = ":XXXXService"
+    // 常驻进程名 persistentName = ":XXXXService"
 }
 
 
@@ -50,7 +48,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'//, 'android.support'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'//25.3.1
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
@@ -66,7 +64,6 @@ dependencies {
 //    compile 'com.gyf.barlibrary:barlibrary:2.3.0'//沉浸式状态栏
 
     compile 'me.yokeyword:fragmentation:1.1.7'//滑动处理事件
-// swipeback基于fragmentation, 如果是自定制SupportActivity/Fragment，则参照SwipeBackActivity/Fragment实现即可
     compile 'me.yokeyword:fragmentation-swipeback:1.1.7'
 
 
