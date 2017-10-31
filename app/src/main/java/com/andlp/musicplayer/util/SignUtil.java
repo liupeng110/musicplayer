@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 
 
-public class SingnatureUtil {
+public class SignUtil {
 
     public static byte[] mda_byte(Context context){
         byte[] toByteArray;

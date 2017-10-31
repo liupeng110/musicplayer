@@ -11,7 +11,7 @@ import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.service.Service_Play;
 import com.andlp.musicplayer.util.DateUtil;
-import com.andlp.musicplayer.util.PackageUtil;
+import com.andlp.musicplayer.util.PkgUtil;
 import com.sds.android.ttpod.media.MediaTag;
 import com.andlp.musicplayer.util.L;
 import com.sds.android.ttpod.media.player.TTMediaPlayer;
@@ -87,7 +87,7 @@ public class Activity_Group extends SwipeBackActivity {
 
 
     private void startService(){//启动服务  先判定是否已开启
-        if (!PackageUtil.isServiceWork(this,"com.andlp.musicplayer.service.Service_Play")){
+        if (!PkgUtil.isServiceWork(this,"com.andlp.musicplayer.service.Service_Play")){
             Intent  intent = new Intent();
             intent.setClass(Activity_Group.this, Service_Play.class);
             startService(intent);
@@ -95,7 +95,7 @@ public class Activity_Group extends SwipeBackActivity {
     }
 
     private void mediaPlay(){
-//        player = TTMediaPlayer.instance(SingnatureUtil.mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
+//        player = TTMediaPlayer.instance(SignUtil.mda_byte(this), "/data/data/"+ "com.andlp.musicplayer" + "/lib");
 //        player.setOnMediaPlayerNotifyEventListener(this.notifyEventListener);
 //        player.setDataSource("/mnt/sdcard/aaa.ape",0);
 //        player.play();
