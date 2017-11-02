@@ -12,9 +12,16 @@ public class info {
 //1.点击播放(底部play/list_play) 发出通知 并更新通知栏状态
 //2.1    点击通知栏 按钮  发出广播  NotifiReceiver接收后  分发给service处理 播放暂停等逻辑  并发消息更新ui中信息
 // 不管ui是否销毁
- //2.2   点击logo唤起activity ,未注销  直接拉起.已注销 重新打开
+ //
  //bottom滑动布局 暂时先不做  与播放器皮肤耦合度大
     //我的最爱 --> 我的歌单下面
+    //notifUtil 更新管理通知栏布局   点击事件
+    //receiver接收到  调用eventbus发送给service  service处理播放等事件
+
+
+
+
+
 
 
 

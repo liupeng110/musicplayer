@@ -15,11 +15,12 @@ public class Receiver_Notifi extends BroadcastReceiver {//WakefulBroadcastReceiv
         final String action = intent.getAction();
         L.i("Receiver收到广播："+action);
           switch (action){
-              case "com.andlp.action.play":     HermesEventBus.getDefault().post("play");
-              case "com.andlp.action.left":      HermesEventBus.getDefault().post("left");
-              case "com.andlp.action.right":    HermesEventBus.getDefault().post("right");
-              case "com.andlp.action.exit":     HermesEventBus.getDefault().post("exit");
-              case "com.andlp.action.other":  HermesEventBus.getDefault().post("other");
+              case "com.andlp.action.ci":     HermesEventBus.getDefault().post("ci"); break;
+              case "com.andlp.action.play":     HermesEventBus.getDefault().post("play"); break;
+              case "com.andlp.action.left":      HermesEventBus.getDefault().post("left");break;
+              case "com.andlp.action.right":    HermesEventBus.getDefault().post("right");break;
+              case "com.andlp.action.exit":     HermesEventBus.getDefault().post("exit");break;
+              case "com.andlp.action.other":  HermesEventBus.getDefault().post("other");break;
           }
     }
 

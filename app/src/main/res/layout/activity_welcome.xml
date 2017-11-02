@@ -8,13 +8,21 @@
     >
 
 
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
     <Button
         android:id="@+id/welcome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
         android:text="welcome"
-        android:visibility="gone"
         />
 
 
