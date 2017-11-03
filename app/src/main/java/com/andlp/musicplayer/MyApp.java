@@ -43,7 +43,7 @@ public class MyApp extends RePluginApplication {
                 .debug(BuildConfig.DEBUG)
              //... // 更多查看wiki或demo
              .install();
-
+          L.i("路径:"+getApplicationContext().getFilesDir().getParentFile().getPath());
 //        Fragmentation.builder() .debug(BuildConfig.DEBUG) .install();//滑动框架初始化
     }
 

@@ -1,5 +1,6 @@
 package com.andlp.musicplayer.util;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.NotificationCompat;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.andlp.musicplayer.R;
@@ -20,10 +22,10 @@ import com.andlp.musicplayer.config.Constant;
 //处理notification布局 创建等问题  解耦和playservice
 public class NotifUtil {
   static  String title,content;
-   static NotificationCompat.Builder builder;
-   static  Notification notification;
-    private boolean ci_press=false,play_press=true;
-
+  static NotificationCompat.Builder builder;
+  static  Notification notification;
+  static boolean ci_press=false,play_press=true;
+//  static Service service;
     public static void send(String title_temp, String content_temp, String ticker, Service service){//自定义通知
         L.e( "进入norifi_my---->" + title_temp+",content_temp:"+content_temp+",ticker:"+ticker);
         title=title_temp;content=content_temp;
@@ -36,7 +38,6 @@ public class NotifUtil {
          notify_big(service);   //初始化大通知栏
         notification = builder.build();
         service.startForeground(Constant.service_ID, notification);// 服务 id,取消时用
-
     }
 
     private static RemoteViews notify_small(Service service){
@@ -120,7 +121,46 @@ public class NotifUtil {
         return remoteViews2;
     }
 
+@SuppressLint("RestrictedApi")
+  private static void  ci(Service service){
+    if (builder.getBigContentView()!=null){
+        if (ci_press){
+            try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci);}catch (Throwable t){t.printStackTrace();}
+        }else {
+            try{builder.getBigContentView().setImageViewResource(R.id.notifi_ci_big,R.mipmap.notifi_ci_p);}catch (Throwable t){t.printStackTrace();}
+        }
+        ci_press=!ci_press;
+        notification = builder.build();
+        service.startForeground(Constant.service_ID, notification);
+    }
+  }
 
+  @SuppressLint("RestrictedApi")
+  private static void play(Service service){
+      L.i("pause中builder.big是否为null--:"+builder.getBigContentView());
+      if (builder.getBigContentView()!=null){
+          if (play_press) {
+              try{ builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_play);}catch (Throwable t){t.printStackTrace();}
+          }else {
+              try{builder.getBigContentView().setImageViewResource(R.id.notifi_pause_big,R.mipmap.notifi_pause);}catch (Throwable t){t.printStackTrace();}
+          }
+      }
+
+         RemoteViews remoteViews =notify_small(service); //重新new因为从builder获取为空
+         L.i("pause中smailview是否为null--:"+remoteViews);
+         if (play_press) {
+             remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_play);
+         }else {
+             remoteViews.setImageViewResource(R.id.notifi_pause,R.mipmap.notifi_pause);
+         }
+         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.VISIBLE);
+//         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.INVISIBLE);
+//         remoteViews.setViewVisibility(R.id.notice_view_type_0, View.GONE);
+         play_press=!play_press;
+         builder.setContent(remoteViews);//通知栏小布局
+         notification = builder.build();
+      service.startForeground(Constant.service_ID, notification);//更新通知栏ui
+    }
 
 
 }

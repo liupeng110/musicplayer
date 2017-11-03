@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.andlp.musicplayer2"
+        applicationId "com.andlp.musicplayer"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1

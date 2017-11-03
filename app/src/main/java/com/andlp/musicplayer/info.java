@@ -18,6 +18,12 @@ public class info {
     //notifUtil 更新管理通知栏布局   点击事件
     //receiver接收到  调用eventbus发送给service  service处理播放等事件
 
+    //数据库
+    //1.防止接口不能用 需要保存用户 收藏歌曲
+    //2.兼容各个接口 数据类型
+    //3.本地保存与云端保存(  )
+    //4.
+
 
 
 

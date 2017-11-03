@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.andlp.musicplayer.config.Constant;
 import com.andlp.musicplayer.util.L;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
@@ -15,12 +16,12 @@ public class Receiver_Notifi extends BroadcastReceiver {//WakefulBroadcastReceiv
         final String action = intent.getAction();
         L.i("Receiver收到广播："+action);
           switch (action){
-              case "com.andlp.action.ci":     HermesEventBus.getDefault().post("ci"); break;
-              case "com.andlp.action.play":     HermesEventBus.getDefault().post("play"); break;
-              case "com.andlp.action.left":      HermesEventBus.getDefault().post("left");break;
-              case "com.andlp.action.right":    HermesEventBus.getDefault().post("right");break;
-              case "com.andlp.action.exit":     HermesEventBus.getDefault().post("exit");break;
-              case "com.andlp.action.other":  HermesEventBus.getDefault().post("other");break;
+              case  Constant.ci:          HermesEventBus.getDefault().post(Constant.ci); break;
+              case  Constant.play:      HermesEventBus.getDefault().post(Constant.play); break;
+              case Constant.left:        HermesEventBus.getDefault().post(Constant.left);break;
+              case Constant.right:     HermesEventBus.getDefault().post(Constant.right);break;
+              case Constant.exit:      HermesEventBus.getDefault().post(Constant.exit);break;
+              case Constant.other:    HermesEventBus.getDefault().post(Constant.other);break;
           }
     }
 
