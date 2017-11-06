@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center|center_horizontal|center_vertical"
-    android:background="@android:color/holo_green_light"
+    android:background="@mipmap/img_splash"
     >
 
 
@@ -12,6 +12,7 @@
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         />
 
 

@@ -5,11 +5,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.config.Anim_Fragment;
+import com.squareup.picasso.Picasso;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import me.yokeyword.fragmentation.SwipeBackLayout;
@@ -22,6 +25,9 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 @ContentView(R.layout.fragment_main)
 public class Fragment_Main extends SwipeBackFragment {
     private Toolbar mToolbar;
+
+    @ViewInject(R.id.fragment_main) private LinearLayout fragment_main;
+
     public static Fragment_Main newInstance() {
         Bundle args = new Bundle();
         Fragment_Main fragment = new Fragment_Main();

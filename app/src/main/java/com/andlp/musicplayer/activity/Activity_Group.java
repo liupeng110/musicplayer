@@ -22,6 +22,7 @@ import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.service.Service_Play;
 import com.andlp.musicplayer.util.DateUtil;
+import com.andlp.musicplayer.util.NotifUtil;
 import com.andlp.musicplayer.util.PkgUtil;
 import com.sds.android.ttpod.media.MediaTag;
 import com.andlp.musicplayer.util.L;
@@ -46,8 +47,6 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  */
 @ContentView(R.layout.activity_group)//不处理播放 只控制ui
 public class Activity_Group extends SwipeBackActivity {
-    Fragment_Main firstFragment;
-    Fragment_New fragment_new;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);//没用base,单独注入
@@ -140,87 +139,14 @@ public class Activity_Group extends SwipeBackActivity {
         L.i("点击 UNKNOWN--"+Build.UNKNOWN);
 
 
+        NotifUtil.checkPermissions(this);
 
 
-        Intent intent = new Intent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("pkg_name", getPackageName());
-        intent.putExtra("app_name","乖,听话 我要的不多都选允许."  );//getString(R.string.app_name)
-        intent.putExtra("class_name", "com.andlp.musicplayer.activity.Activity_Main");
-        ComponentName comp = new ComponentName("com.coloros.notificationmanager",
-                "com.coloros.notificationmanager.AppDetailPreferenceActivity");
-        intent.setComponent(comp);
-       startActivity(intent);
 
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private boolean isNotificationEnabled(Context context) {
-        String CHECK_OP_NO_THROW = "checkOpNoThrow";
-        String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
-        AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-        ApplicationInfo appInfo = context.getApplicationInfo();
-        String pkg = context.getApplicationContext().getPackageName();
-        int uid = appInfo.uid;
-        Class appOpsClass = null;
-    /* Context.APP_OPS_MANAGER */
-        try {
-            appOpsClass = Class.forName(AppOpsManager.class.getName());
-            Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
-                    String.class);
-            Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
-            int value = (Integer) opPostNotificationValue.get(Integer.class);
-            if ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED){
-                Toast.makeText(this,"true", Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(this,"false",Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("是否跳转到设置页面");
-                builder.setTitle("通知栏权限未开启！");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        goToSet();
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("取消",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-            }
-            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
-    private void goToSet(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BASE) {
-            // 进入设置系统应用权限界面
-            Intent intent = new Intent(Settings.ACTION_SETTINGS);
-            startActivity(intent);
-            return;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {// 运行系统在5.x环境使用
-            // 进入设置系统应用权限界面
-            Intent intent = new Intent(Settings.ACTION_SETTINGS);
-            startActivity(intent);
-            return;
-        }
-    }
 
 
 

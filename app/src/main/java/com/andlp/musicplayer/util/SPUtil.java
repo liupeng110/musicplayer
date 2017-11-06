@@ -13,7 +13,7 @@ public class SPUtil {
 	}
 
 
-	public static final String FILE_NAME = "andlp";
+	public static final String FILE_NAME = "ttpod";
 
 
 	private static String SP_NAME = FILE_NAME;
