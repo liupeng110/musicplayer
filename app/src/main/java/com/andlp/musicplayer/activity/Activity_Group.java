@@ -1,11 +1,16 @@
 package com.andlp.musicplayer.activity;
 
 import android.app.AppOpsManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +18,7 @@ import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -20,6 +26,7 @@ import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
+import com.andlp.musicplayer.fragment.Fragment_No;
 import com.andlp.musicplayer.service.Service_Play;
 import com.andlp.musicplayer.util.DateUtil;
 import com.andlp.musicplayer.util.NotifUtil;
@@ -31,6 +38,7 @@ import com.sds.android.ttpod.media.player.TTMediaPlayer;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.lang.reflect.Field;
@@ -48,6 +56,9 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 @ContentView(R.layout.activity_group)//不处理播放 只控制ui
 public class Activity_Group extends SwipeBackActivity {
 
+    @ViewInject(R.id.progress) ProgressBar progress;
+          Fragment_No  fragment_no ;
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);//没用base,单独注入
         super.onCreate(savedInstanceState);
@@ -60,6 +71,10 @@ public class Activity_Group extends SwipeBackActivity {
         if (!isTaskRoot()) {//判断是否最底层
              L.i("最底层");
        }
+
+        progress.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);//LTGRAY
+
+
 
     }
 
@@ -77,16 +92,35 @@ public class Activity_Group extends SwipeBackActivity {
 
 
      public void img(View view){//单击开启新fragment
+
+
+//         loadMultipleRootFragment(R.id.cc2,0,Fragment_New.newInstance());
+
        HermesEventBus.getDefault().postSticky("service");
-       start(Fragment_New.newInstance());
+       start(Fragment_New.newInstance(),0);
        startService();
-//         mediaTag("/mnt/sdcard/aaa.ape");//测试mediatag
-//         mediaPlay();                                    //测试播放
+
+//       Intent intent = new Intent(this,Activity_Main.class);
+//       startActivity(intent);
+
+         startFragment();
+}
+
+private void startFragment(){
+    FragmentManager fm = getFragmentManager();
+    FragmentTransaction transaction = fm.beginTransaction();
+    fragment_no =Fragment_No.newInstance();
+    transaction.replace(R.id.cc2, fragment_no);
+    transaction.commit();
 
 }
 
+
+
+   int pros=0;
     public void next(View view){
         L.i("点击next");
+        progress.setProgress(pros++);
     }
     public void play(View view){
         L.i("点击play");
@@ -94,6 +128,7 @@ public class Activity_Group extends SwipeBackActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setting(View view){
         L.i("点击setting");
+        progress.setProgress(pros--);
         oppo();
 //        getAppDetailSettingIntent(this);
 //        isNotificationEnabled(this);
@@ -212,7 +247,16 @@ public class Activity_Group extends SwipeBackActivity {
             startMain.addCategory(Intent.CATEGORY_HOME);
             startMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             startActivity(startMain);
-        }else {super.onBackPressedSupport();}
+        }  else {
+            if (findFragment(Fragment_Main.class) == null) {
+                super.onBackPressedSupport();
+            }else {
+                getSupportFragmentManager().popBackStack();
+                HermesEventBus.getDefault().post("fragment_no");
+            }
+        }
+
+
     }
 
     @Override public boolean swipeBackPriority() {

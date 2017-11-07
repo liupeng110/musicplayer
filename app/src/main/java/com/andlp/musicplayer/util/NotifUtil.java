@@ -89,9 +89,9 @@ public class NotifUtil {
 
 
         boolean isAboveLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-        builder.setSmallIcon(isAboveLollipop ? R.drawable.img_playing_hint : R.drawable.notifi_small_color);//notifi_small_21
+        builder.setSmallIcon(isAboveLollipop ? R.mipmap.notifi_small : R.mipmap.notifi_small_color);//notifi_small_21
 
-        builder.setContent(remoteViews);//通知栏小布局 
+        builder.setContent(remoteViews);//通知栏小布局
         return remoteViews;
     }
     private static RemoteViews  notify_big(Service service){

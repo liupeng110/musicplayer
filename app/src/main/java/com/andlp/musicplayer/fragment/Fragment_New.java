@@ -43,7 +43,7 @@ public class Fragment_New extends SwipeBackFragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
-        getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_LEFT);
+        getSwipeBackLayout().setShadow(R.mipmap.kong0,SwipeBackLayout.EDGE_LEFT);
         getSwipeBackLayout().setParallaxOffset(0.0f );//阴影距离
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
     }
