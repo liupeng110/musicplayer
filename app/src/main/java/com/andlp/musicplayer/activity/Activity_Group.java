@@ -1,30 +1,20 @@
 package com.andlp.musicplayer.activity;
 
-import android.app.AppOpsManager;
-import android.app.DownloadManager;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.ComponentName;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.fragment.Fragment_No;
@@ -42,11 +32,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
@@ -108,11 +93,10 @@ public class Activity_Group extends SwipeBackActivity {
 }
 
 private void startFragment(){
-    FragmentManager fm = getFragmentManager();
-    FragmentTransaction transaction = fm.beginTransaction();
+    FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
     fragment_no =Fragment_No.newInstance();
     transaction.addToBackStack(fragment_no.getClass().getSimpleName());
-    transaction.replace(R.id.cc2, fragment_no);
+    transaction.replace(R.id.cc2,  fragment_no);
     transaction.commit();
 }
 
@@ -250,9 +234,9 @@ private void startFragment(){
 
         if (getFragmentManager().getBackStackEntryCount()>0){
             L.i("返回键3---"+getFragmentManager().getBackStackEntryCount());
-            FragmentManager fm = getFragmentManager();
-                FragmentTransaction tx = fm.beginTransaction();
+                FragmentTransaction tx =getSupportFragmentManager().beginTransaction();
                 tx.hide(fragment_no);
+                tx.commit();
             getFragmentManager().popBackStack();
             return;
         }
@@ -264,24 +248,8 @@ private void startFragment(){
             startMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             startActivity(startMain);
         }  else {
-//            if (findFragment(Fragment_Main.class) == null) {
                 super.onBackPressedSupport();
-//            }
-// else {
-////                FragmentManager fm = getFragmentManager();
-////                FragmentTransaction tx = fm.beginTransaction();
-////                tx.hide(fragment_no);
-////                getFragmentManager().popBackStack();
-////                FragmentTransaction transaction = fm.beginTransaction();
-////                fragment_no =Fragment_No.newInstance();
-////                transaction.replace(R.id.cc2, fragment_no);
-////                transaction.commit();
-////                fragment_no.onDestroy();
-//                getFragmentManager().popBackStack();
-//                HermesEventBus.getDefault().post("fragment_no");
-//            }
         }
-
 
     }
 

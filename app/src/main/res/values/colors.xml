@@ -8,4 +8,8 @@
     <color name="bom_title">#FFFFFFFF</color>
     <color name="bom_context">#FFFFFFFF</color>
 
+    <color name="green">#31C27C</color>
+    <color name="gray_white">#99ffffff</color>
+
+
 </resources>

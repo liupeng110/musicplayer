@@ -9,9 +9,9 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class Anim_Fragment extends FragmentAnimator implements Parcelable {
 
     public Anim_Fragment() {
-        enter =  R.anim.fragment_enter;
+        enter =  R.anim.fragment_enter;             //滑动时
         exit =  R.anim.fragment_exit;
-        popEnter =  R.anim.fragment_pop_enter;
+        popEnter =  R.anim.fragment_pop_enter;//返回键时
         popExit = R.anim.fragment_pop_exit;
     }
     protected Anim_Fragment(Parcel in) {

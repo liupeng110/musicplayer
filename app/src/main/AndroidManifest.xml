@@ -31,7 +31,7 @@
             android:launchMode="singleTask"
             />
         <activity android:name=".activity.Activity_Player"/>
-        <service android:name=".service.Service_Play"/>
+        <service android:name=".service.Service_Play" android:priority="1000" />
          <receiver android:name=".service.Receiver_Notifi">
              <intent-filter>
                  <action android:name="com.andlp.action.play" />
@@ -40,6 +40,7 @@
                  <action android:name="com.andlp.action.exit" />
                  <action android:name="com.andlp.action.other" />
                  <action android:name="com.andlp.action.open" />
+                 <action android:name="android.intent.action.TIME_TICK" />
              </intent-filter>
          </receiver>
 

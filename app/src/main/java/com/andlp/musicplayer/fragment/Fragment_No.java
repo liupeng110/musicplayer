@@ -1,8 +1,8 @@
 package com.andlp.musicplayer.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +16,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.x;
 
-import me.yokeyword.fragmentation.SwipeBackLayout;
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**

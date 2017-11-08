@@ -1,5 +1,7 @@
 package com.andlp.musicplayer.config;
 
+import android.content.Intent;
+
 /**
  * 717219917@qq.com  2017/9/22 11:19
  */
@@ -14,6 +16,7 @@ public class Constant {
      public final static String ci       = "com.andlp.action.ci";
      public final static String other = "com.andlp.action.other";
      public final static String EXIT = "com.andlp.action.other";
+     public final static String time = Intent.ACTION_TIME_TICK;
 
 
 }

@@ -22,6 +22,8 @@ public class Receiver_Notifi extends BroadcastReceiver {//WakefulBroadcastReceiv
               case Constant.right:     HermesEventBus.getDefault().post(Constant.right);break;
               case Constant.exit:      HermesEventBus.getDefault().post(Constant.exit);break;
               case Constant.other:    HermesEventBus.getDefault().post(Constant.other);break;
+              case Constant.time :   HermesEventBus.getDefault().post(Constant.time);break;
+              default:     break;
           }
     }
 
