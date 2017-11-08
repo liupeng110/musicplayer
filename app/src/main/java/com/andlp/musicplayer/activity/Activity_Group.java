@@ -1,6 +1,7 @@
 package com.andlp.musicplayer.activity;
 
 import android.app.AppOpsManager;
+import android.app.DownloadManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -72,7 +73,7 @@ public class Activity_Group extends SwipeBackActivity {
              L.i("最底层");
        }
 
-        progress.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);//LTGRAY
+        progress.getProgressDrawable().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);//LTGRAY
 
 
 
@@ -96,9 +97,9 @@ public class Activity_Group extends SwipeBackActivity {
 
 //         loadMultipleRootFragment(R.id.cc2,0,Fragment_New.newInstance());
 
-       HermesEventBus.getDefault().postSticky("service");
-       start(Fragment_New.newInstance(),0);
-       startService();
+//       HermesEventBus.getDefault().postSticky("service");
+//       start(Fragment_New.newInstance(),0);
+//       startService();
 
 //       Intent intent = new Intent(this,Activity_Main.class);
 //       startActivity(intent);
@@ -110,9 +111,9 @@ private void startFragment(){
     FragmentManager fm = getFragmentManager();
     FragmentTransaction transaction = fm.beginTransaction();
     fragment_no =Fragment_No.newInstance();
+    transaction.addToBackStack(fragment_no.getClass().getSimpleName());
     transaction.replace(R.id.cc2, fragment_no);
     transaction.commit();
-
 }
 
 
@@ -121,9 +122,12 @@ private void startFragment(){
     public void next(View view){
         L.i("点击next");
         progress.setProgress(pros++);
+        start(Fragment_New.newInstance(),0);
+
     }
     public void play(View view){
         L.i("点击play");
+        startService();
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setting(View view){
@@ -241,23 +245,46 @@ private void startFragment(){
     }
 
     @Override public void onBackPressedSupport() {
-        L.i("返回键"+getSupportFragmentManager().getBackStackEntryCount());
+        L.i("返回键1---"+getSupportFragmentManager().getBackStackEntryCount());
+        L.i("返回键2---"+getFragmentManager().getBackStackEntryCount());
+
+        if (getFragmentManager().getBackStackEntryCount()>0){
+            L.i("返回键3---"+getFragmentManager().getBackStackEntryCount());
+            FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.hide(fragment_no);
+            getFragmentManager().popBackStack();
+            return;
+        }
+
         if (getSupportFragmentManager().getBackStackEntryCount() <= 1){ //模拟home
+            L.i("返回键4---"+getFragmentManager().getBackStackEntryCount());
             Intent startMain = new Intent(Intent.ACTION_MAIN);
             startMain.addCategory(Intent.CATEGORY_HOME);
             startMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             startActivity(startMain);
         }  else {
-            if (findFragment(Fragment_Main.class) == null) {
+//            if (findFragment(Fragment_Main.class) == null) {
                 super.onBackPressedSupport();
-            }else {
-                getSupportFragmentManager().popBackStack();
-                HermesEventBus.getDefault().post("fragment_no");
-            }
+//            }
+// else {
+////                FragmentManager fm = getFragmentManager();
+////                FragmentTransaction tx = fm.beginTransaction();
+////                tx.hide(fragment_no);
+////                getFragmentManager().popBackStack();
+////                FragmentTransaction transaction = fm.beginTransaction();
+////                fragment_no =Fragment_No.newInstance();
+////                transaction.replace(R.id.cc2, fragment_no);
+////                transaction.commit();
+////                fragment_no.onDestroy();
+//                getFragmentManager().popBackStack();
+//                HermesEventBus.getDefault().post("fragment_no");
+//            }
         }
 
 
     }
+
 
     @Override public boolean swipeBackPriority() {
          return getSupportFragmentManager().getBackStackEntryCount() <= 1;

@@ -23,7 +23,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 /**
  * 717219917@qq.com  2017/9/25 15:10
  */
-@ContentView(R.layout.fragment_new)
+@ContentView(R.layout.fragment_no)
 public class Fragment_No extends Fragment {
 
     private Toolbar mToolbar;
