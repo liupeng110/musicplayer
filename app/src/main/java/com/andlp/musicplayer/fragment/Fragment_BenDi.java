@@ -13,10 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.util.L;
 import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.squareup.picasso.Picasso;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -24,15 +22,13 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 
-import me.yokeyword.fragmentation.SwipeBackLayout;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * 717219917@qq.com  2017/9/25 15:10
  */
-@ContentView(R.layout.fragment_main)
-public class Fragment_Main extends SwipeBackFragment {
+@ContentView(R.layout.fragment_bendi)
+public class Fragment_BenDi extends SwipeBackFragment {
     @ViewInject(R.id.fragment_main_toolbar) RelativeLayout fragment_main_toolbar;
     private Toolbar mToolbar;
 
@@ -47,9 +43,9 @@ public class Fragment_Main extends SwipeBackFragment {
     private ArrayList<TextView> textViews;
     private int line_width;
 
-    public static Fragment_Main newInstance() {
+    public static Fragment_BenDi newInstance() {
         Bundle args = new Bundle();
-        Fragment_Main fragment = new Fragment_Main();
+        Fragment_BenDi fragment = new Fragment_BenDi();
         fragment.setArguments(args);
         return fragment;
     }//构造
@@ -81,9 +77,9 @@ public class Fragment_Main extends SwipeBackFragment {
         ViewPropertyAnimator.animate(tab_app).scaleX(1.3f).setDuration(0);
 
         fragments = new ArrayList<>();
-        fragments.add( new Fragment_No() );//Fragment_New.newInstance()
-        fragments.add( new Fragment_No() );
-        fragments.add( new Fragment_No() );
+        fragments.add(   Fragment_No.newInstance());//Fragment_New.newInstance()
+        fragments.add( Fragment_New.newInstance());
+        fragments.add( Fragment_No.newInstance());
 
         textViews = new ArrayList<>();
         textViews.add(tab_app);

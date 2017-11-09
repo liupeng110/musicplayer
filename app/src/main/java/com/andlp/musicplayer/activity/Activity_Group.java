@@ -1,6 +1,5 @@
 package com.andlp.musicplayer.activity;
 
-import android.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,7 @@ import android.widget.ProgressBar;
 
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.fragment.Fragment_Main;
+import com.andlp.musicplayer.fragment.Fragment_BenDi;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.fragment.Fragment_No;
 import com.andlp.musicplayer.service.Service_Play;
@@ -50,8 +49,8 @@ public class Activity_Group extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
         getSwipeBackLayout().setEnableGesture(false);//设置最下层不可滑动
-        if (findFragment(Fragment_Main.class) == null) {
-            loadRootFragment(R.id.cc, Fragment_Main.newInstance());  // 加载根Fragment
+        if (findFragment(Fragment_BenDi.class) == null) {
+            loadRootFragment(R.id.cc, Fragment_BenDi.newInstance());  // 加载根Fragment
         }
 
         if (!isTaskRoot()) {//判断是否最底层

@@ -141,7 +141,7 @@ public class Activity_Main extends Activity_Base {
 
 
     private void addFragment(){
-//        Fragment_Main fragment_local =   Fragment_Main.newInstance();
+//        Fragment_BenDi fragment_local =   Fragment_BenDi.newInstance();
 //        FragmentTransaction tx =  getFragmentManager().beginTransaction();
 //        tx.add(R.id.content, fragment_local);//将当前的事务添加到了回退栈
 //        tx.addToBackStack(null);
