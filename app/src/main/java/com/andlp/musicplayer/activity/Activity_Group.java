@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 
 import com.andlp.musicplayer.R;
 import com.andlp.musicplayer.fragment.Fragment_BenDi;
+import com.andlp.musicplayer.fragment.Fragment_Main;
 import com.andlp.musicplayer.fragment.Fragment_New;
 import com.andlp.musicplayer.fragment.Fragment_No;
 import com.andlp.musicplayer.service.Service_Play;
@@ -41,7 +42,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 @ContentView(R.layout.activity_group)//不处理播放 只控制ui
 public class Activity_Group extends SwipeBackActivity {
 
-    @ViewInject(R.id.progress) ProgressBar progress;
+    @ViewInject(R.id.bom_progress) ProgressBar progress;
           Fragment_No  fragment_no ;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class Activity_Group extends SwipeBackActivity {
         HermesEventBus.getDefault().register(this);
         getSwipeBackLayout().setEnableGesture(false);//设置最下层不可滑动
         if (findFragment(Fragment_BenDi.class) == null) {
-            loadRootFragment(R.id.cc, Fragment_BenDi.newInstance());  // 加载根Fragment
+            loadRootFragment(R.id.cc, Fragment_Main.newInstance());  // 加载根Fragment
         }
 
         if (!isTaskRoot()) {//判断是否最底层

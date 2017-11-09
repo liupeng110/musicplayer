@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.util.L;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -22,6 +23,9 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 
+import me.yokeyword.fragmentation.SwipeBackLayout;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
@@ -66,10 +70,10 @@ public class Fragment_BenDi extends SwipeBackFragment {
             x.view().inject(this, this.getView());
         }
            viewpager();
-           getSwipeBackLayout().setEnableGesture(false);
-//        getSwipeBackLayout().setShadow(R.drawable.kong0,SwipeBackLayout.EDGE_ALL);
-//        getSwipeBackLayout().setParallaxOffset(0.0f );
-//        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
+//           getSwipeBackLayout().setEnableGesture(false);
+        getSwipeBackLayout().setShadow(R.mipmap.kong0, SwipeBackLayout.EDGE_ALL);
+        getSwipeBackLayout().setParallaxOffset(0.0f );
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL);
     }
 
 
@@ -136,12 +140,9 @@ public class Fragment_BenDi extends SwipeBackFragment {
 
     }
 
-
-//        @Override
-//    public FragmentAnimator onCreateFragmentAnimator() {
-//        // 设置横向(和安卓4.x动画相同)
-//        return new Anim_Fragment();
-//    }
+        @Override public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator(); // 设置横向(和安卓4.x动画相同)
+    }
 
 
 }
