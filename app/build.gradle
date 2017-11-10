@@ -64,8 +64,8 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
 //    compile 'com.gyf.barlibrary:barlibrary:2.3.0'//沉浸式状态栏
 
-    compile 'me.yokeyword:fragmentation:1.1.7'//滑动处理事件
-    compile 'me.yokeyword:fragmentation-swipeback:1.1.7'
+    compile 'me.yokeyword:fragmentation:1.1.8'//滑动处理事件
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.8'
 
 
 //    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.3'

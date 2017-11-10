@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.activity;
+package com.andlp.musicplayer.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

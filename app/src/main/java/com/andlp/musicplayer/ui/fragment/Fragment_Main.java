@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.fragment;
+package com.andlp.musicplayer.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,16 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.config.Anim_Fragment;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import me.yokeyword.fragmentation.SwipeBackLayout;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
@@ -55,7 +51,7 @@ public class Fragment_Main extends SwipeBackFragment {
 
     @Event(value = R.id.main_bendi ,type=View.OnClickListener.class)
     private void main_bendi(View view) {
-        start(Fragment_BenDi.newInstance());
+        start(Fragment_New.newInstance());
     }
 
 

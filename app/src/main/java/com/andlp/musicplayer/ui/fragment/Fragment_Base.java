@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.fragment;
+package com.andlp.musicplayer.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

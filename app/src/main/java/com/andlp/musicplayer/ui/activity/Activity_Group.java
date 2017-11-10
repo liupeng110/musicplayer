@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.activity;
+package com.andlp.musicplayer.ui.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -14,10 +14,10 @@ import android.widget.ProgressBar;
 
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.fragment.Fragment_BenDi;
-import com.andlp.musicplayer.fragment.Fragment_Main;
-import com.andlp.musicplayer.fragment.Fragment_New;
-import com.andlp.musicplayer.fragment.Fragment_No;
+import com.andlp.musicplayer.ui.fragment.Fragment_BenDi;
+import com.andlp.musicplayer.ui.fragment.Fragment_Main;
+import com.andlp.musicplayer.ui.fragment.Fragment_New;
+import com.andlp.musicplayer.ui.fragment.Fragment_No;
 import com.andlp.musicplayer.service.Service_Play;
 import com.andlp.musicplayer.util.DateUtil;
 import com.andlp.musicplayer.util.NotifUtil;

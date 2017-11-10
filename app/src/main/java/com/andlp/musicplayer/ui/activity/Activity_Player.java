@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.activity;
+package com.andlp.musicplayer.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,15 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.util.L;
 
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
-
-import java.io.IOException;
 
 
 /**

@@ -14,16 +14,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
-import com.andlp.musicplayer.BuildConfig;
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.activity.Activity_Group;
+import com.andlp.musicplayer.ui.activity.Activity_Group;
 import com.andlp.musicplayer.config.Constant;
 
 import java.lang.reflect.Field;
@@ -237,7 +234,7 @@ public class NotifUtil {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("pkg_name", context.getPackageName());
         intent.putExtra("app_name",context.getString(R.string.notifi_oppo) );
-        intent.putExtra("class_name", "com.andlp.musicplayer.activity.Activity_Main");
+        intent.putExtra("class_name", "com.andlp.musicplayer.ui.activity.Activity_Main");
         ComponentName comp = new ComponentName("com.coloros.notificationmanager", "com.coloros.notificationmanager.AppDetailPreferenceActivity");
         intent.setComponent(comp);
         context.startActivity(intent);

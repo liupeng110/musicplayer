@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.view;
+package com.andlp.musicplayer.ui.view;
 
 import android.app.Activity;
 import android.content.Context;

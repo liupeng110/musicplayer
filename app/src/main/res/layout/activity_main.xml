@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorPrimaryDark"
-    tools:context="com.andlp.musicplayer.activity.Activity_Main">
+    tools:context=".ui.activity.Activity_Main">
 
 
     <Button

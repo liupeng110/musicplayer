@@ -18,19 +18,19 @@
         android:supportsRtl="true"
         android:name=".MyApp"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Activity_Welcome"  >
+        <activity android:name=".ui.activity.Activity_Welcome"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Activity_Main"/>
-        <activity android:name=".activity.Activity_Group"
+        <activity android:name=".ui.activity.Activity_Main"/>
+        <activity android:name=".ui.activity.Activity_Group"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
-        <activity android:name=".activity.Activity_Player"/>
+        <activity android:name=".ui.activity.Activity_Player"/>
         <service android:name=".service.Service_Play" android:priority="1000" />
          <receiver android:name=".service.Receiver_Notifi">
              <intent-filter>

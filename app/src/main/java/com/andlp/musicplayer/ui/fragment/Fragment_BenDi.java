@@ -1,4 +1,4 @@
-package com.andlp.musicplayer.fragment;
+package com.andlp.musicplayer.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.config.Anim_Fragment;
 import com.andlp.musicplayer.util.L;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
