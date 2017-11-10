@@ -5,7 +5,7 @@
     android:background="@mipmap/base_bg"
     android:orientation="vertical">
 
-    <Button
+    <Button 
         android:id="@+id/main_bendi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
