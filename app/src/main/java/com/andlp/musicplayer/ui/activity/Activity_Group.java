@@ -19,6 +19,7 @@ import com.andlp.musicplayer.ui.fragment.Fragment_Main;
 import com.andlp.musicplayer.ui.fragment.Fragment_New;
 import com.andlp.musicplayer.ui.fragment.Fragment_No;
 import com.andlp.musicplayer.service.Service_Play;
+import com.andlp.musicplayer.ui.fragment.Fragment_Scan;
 import com.andlp.musicplayer.util.DateUtil;
 import com.andlp.musicplayer.util.NotifUtil;
 import com.andlp.musicplayer.util.PkgUtil;
@@ -89,16 +90,26 @@ public class Activity_Group extends SwipeBackActivity {
 //       Intent intent = new Intent(this,Activity_Main.class);
 //       startActivity(intent);
 
-         startFragment();
+         startFragment2();
 }
 
-private void startFragment(){
+     private void startFragment(){
     FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
     fragment_no =Fragment_No.newInstance();
     transaction.addToBackStack(fragment_no.getClass().getSimpleName());
     transaction.replace(R.id.cc2,  fragment_no);
     transaction.commit();
 }
+
+
+    private void startFragment2(){
+        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+        Fragment_Scan fragment_scan =Fragment_Scan.newInstance();
+        transaction.addToBackStack(fragment_scan.getClass().getSimpleName());
+        transaction.replace(R.id.cc2,  fragment_scan);
+        transaction.commit();
+    }
+
 
 
 

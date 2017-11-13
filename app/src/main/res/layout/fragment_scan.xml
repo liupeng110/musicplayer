@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/base_bg"
-    android:orientation="vertical">
+    android:background="@android:color/holo_green_dark"
+    >
 
     <Button
-        android:id="@+id/main_bendi"
+        android:id="@+id/scan_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="main"
+        android:text="scan本地"
         />
 
 
-</FrameLayout>
+</LinearLayout>
