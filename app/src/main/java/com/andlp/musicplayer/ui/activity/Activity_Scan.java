@@ -34,7 +34,7 @@ public class Activity_Scan extends SwipeBackActivity {
         getSwipeBackLayout().setParallaxOffset(0.0f );//阴影距离
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
 
-//        if (findFragment(Fragment_BenDi.class) == null) {
+//        if (findFragment(Fragment_BenDi.class) == null) { 
 //            loadRootFragment(R.id.cc, Fragment_Main.newInstance());  // 加载根Fragment
 //        }
 
