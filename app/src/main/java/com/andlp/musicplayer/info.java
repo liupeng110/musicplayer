@@ -26,7 +26,8 @@ public class info {
     //页面结构需要重新设计
     //滑动冲突问题
     //就像打怪升级  解决一个怪又遇见一个怪  后面还有各种怪在等着
-
+    //扫描页 activity---fragment/view
+// L.i("路径:"+getApplicationContext().getFilesDir().getParentFile().getPath());
 
 
 

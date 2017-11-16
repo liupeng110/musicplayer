@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 
 import com.andlp.musicplayer.R;
+import com.andlp.musicplayer.ui.LifeCycleCallback_Fragment;
 import com.andlp.musicplayer.ui.fragment.Fragment_BenDi;
 import com.andlp.musicplayer.ui.fragment.Fragment_Main;
 import com.andlp.musicplayer.ui.fragment.Fragment_New;
@@ -59,8 +60,8 @@ public class Activity_Group extends SwipeBackActivity {
              L.i("最底层");
        }
 
-        progress.getProgressDrawable().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);//LTGRAY
-
+       progress.getProgressDrawable().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);//LTGRAY
+      getSupportFragmentManager().registerFragmentLifecycleCallbacks(new LifeCycleCallback_Fragment(),false);
 
 
     }
@@ -106,7 +107,7 @@ public class Activity_Group extends SwipeBackActivity {
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         Fragment_Scan fragment_scan =Fragment_Scan.newInstance();
         transaction.addToBackStack(fragment_scan.getClass().getSimpleName());
-        transaction.replace(R.id.cc2,  fragment_scan);
+        transaction.replace(R.id.cc2,  fragment_scan);//  
         transaction.commit();
     }
 

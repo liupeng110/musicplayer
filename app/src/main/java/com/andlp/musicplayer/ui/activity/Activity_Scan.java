@@ -1,25 +1,14 @@
 package com.andlp.musicplayer.ui.activity;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.ui.fragment.Fragment_BenDi;
-import com.andlp.musicplayer.ui.fragment.Fragment_Main;
-import com.andlp.musicplayer.util.L;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.x;
 
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SwipeBackLayout;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
-import xiaofei.library.hermeseventbus.HermesEventBus;
-
-/**
- * Created by Administrator on 2017/11/13.
- */
 
 @ContentView(R.layout.fragment_main)
 public class Activity_Scan extends SwipeBackActivity {
@@ -38,7 +27,7 @@ public class Activity_Scan extends SwipeBackActivity {
 //            loadRootFragment(R.id.cc, Fragment_Main.newInstance());  // 加载根Fragment
 //        }
 
-
+        getSupportFragmentManager();
 
     }
 
