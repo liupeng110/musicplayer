@@ -16,7 +16,7 @@ public class Activity_Scan extends SwipeBackActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         x.view().inject(this);//没用base,单独注入
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);  
 //        HermesEventBus.getDefault().register(this);
 //        getSwipeBackLayout().setEnableGesture(false);//设置最下层不可滑动
         getSwipeBackLayout().setShadow(R.mipmap.kong0, SwipeBackLayout.EDGE_LEFT);
