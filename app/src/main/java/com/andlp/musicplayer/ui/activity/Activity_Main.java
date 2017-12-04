@@ -59,6 +59,9 @@ public class Activity_Main extends Activity_Base {
     @Event(value = R.id.txt,type = View.OnClickListener.class)
     private void txt(View view) {
         L.i(tag,"单击  txt");
+        RePlugin.startActivity(Activity_Main.this, RePlugin.createIntent("plugin2", "com.sds.android.ttpod.EntryActivity"));
+
+
 
     }
 

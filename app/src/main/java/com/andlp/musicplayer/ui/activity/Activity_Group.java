@@ -1,5 +1,8 @@
 package com.andlp.musicplayer.ui.activity;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -85,14 +88,27 @@ public class Activity_Group extends SwipeBackActivity {
 //         loadMultipleRootFragment(R.id.cc2,0,Fragment_New.newInstance());
 
 //       HermesEventBus.getDefault().postSticky("service");
-//       start(Fragment_New.newInstance(),0);
+//       start(Fragment
+// _New.newInstance(),0);
 //       startService();
 
 //       Intent intent = new Intent(this,Activity_Main.class);
 //       startActivity(intent);
-
-         startFragment2();
+         isTopActivity(this);
+//         startFragment2();
 }
+
+    private boolean isTopActivity(Activity activity)
+    {
+        ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+        L.i("最上层:0"+cn.getClassName());
+        L.i("最上层1:"+cn.getShortClassName());
+        L.i("最上层2:"+cn.getPackageName());
+
+        return cn.getClassName().contains("666");
+    }
+
 
      private void startFragment(){
     FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();

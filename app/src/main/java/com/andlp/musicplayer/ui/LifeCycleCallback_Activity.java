@@ -2,9 +2,11 @@ package com.andlp.musicplayer.ui;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +39,7 @@ public class LifeCycleCallback_Activity implements Application.ActivityLifecycle
             activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
             activity.getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
+        ((FragmentActivity)activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(new LifeCycleCallback_Fragment(),false);
 
     }
     @Override public void onActivityStarted(Activity activity) {

@@ -45,6 +45,9 @@
              </intent-filter>
          </receiver>
 
+
+        <activity android:name=".qq.QQActivity"/>
+
     </application>
 
 </manifest>
