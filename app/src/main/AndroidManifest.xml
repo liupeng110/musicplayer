@@ -46,7 +46,7 @@
          </receiver>
 
 
-        <activity android:name=".qq.QQActivity"/>
+        <activity android:name=".ui.qq.QQActivity"/>
 
     </application>
 

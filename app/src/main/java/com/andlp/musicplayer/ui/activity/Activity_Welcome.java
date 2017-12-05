@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.andlp.musicplayer.R;
-import com.andlp.musicplayer.qq.QQActivity;
+import com.andlp.musicplayer.ui.qq.QQActivity;
 import com.andlp.musicplayer.util.L;
 
 import org.xutils.view.annotation.ContentView;
